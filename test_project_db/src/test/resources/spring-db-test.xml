@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <jpa:repositories base-package="com.century.test_project_spolenov.repository" repository-impl-postfix="Impl"/>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:~/test;MODE=Oracle;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS ROBOT;"/>
+
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.century.test_project_spolenov.model"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="H2"/>
+                <property name="generateDdl" value="true"/>
+                <property name="showSql" value="true"/>
+            </bean>
+        </property>
+    </bean>
+
+    <beans>
+        <bean id="dbInitilizer_store" class="com.century.test_project_spolenov.initializer.DbInitializer">
+            <constructor-arg name="dataset" value="/dataset/robot.xml"/>
+            <property name="dataSource" ref="dataSource"/>
+            <property name="schema" value="store"/>
+        </bean>
+        <bean id="dbInitilizer_public" class="com.century.test_project_spolenov.initializer.DbInitializer">
+            <constructor-arg name="dataset" value="/dataset/public.xml"/>
+            <property name="dataSource" ref="dataSource"/>
+            <property name="schema" value="public"/>
+        </bean>
+        <bean class="com.century.test_project_spolenov.initializer.DbInitializerList"/>
+    </beans>
+</beans>

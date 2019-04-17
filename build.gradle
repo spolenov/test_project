@@ -16,7 +16,7 @@ plugins {
 
 repositories {
     // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
+    // You can declare any Maven/Ivy/file com.century.test_project_spolenov.repository here.
     jcenter()
 }
 
@@ -32,11 +32,19 @@ dependencies {
 // Define the main class for the application
 mainClassName = 'test_project.App'
 
-
-
 Closure cl = { task -> println "I'm $task.project.name" }
 task('hello').doLast(cl)
+
 project(':test_project_db') {
+    task('hello').doLast(cl)
+}
+project(':test_project_service') {
+    task('hello').doLast(cl)
+}
+project(':test_project_web') {
+    task('hello').doLast(cl)
+}
+project(':test_project_tutorial') {
     task('hello').doLast(cl)
 }
 
