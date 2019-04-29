@@ -9,8 +9,7 @@ public class UserAgeComparator implements Comparator<User>{
 
 	@Override
 	public int compare(User user0, User user1) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return Integer.compare(user0.getAge(), user1.getAge());
 	}
 	
 }

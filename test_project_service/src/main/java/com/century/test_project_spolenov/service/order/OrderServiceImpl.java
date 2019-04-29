@@ -9,14 +9,16 @@ import com.century.test_project_spolenov.service.response.ResponseState;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Collections.singletonList;
+
 
 public class OrderServiceImpl implements OrderService{
 
     private Response getOkOrderResponse(Order order){
-        return new OrderResponse(order, ResponseState.OK);
+        return new OrderResponse(singletonList(order), ResponseState.OK);
     }
     private Response getErrorOrderResponse(Order order){
-        return new OrderResponse(order, ResponseState.ERROR);
+        return new OrderResponse(singletonList(order), ResponseState.ERROR);
     }
 
     @Override
@@ -29,23 +31,23 @@ public class OrderServiceImpl implements OrderService{
     }
 
     private class OrderResponse extends ActionResponse<Order> {
-        OrderResponse(Order entity, ResponseState state) {
-            super(entity, state);
+        OrderResponse(List<Order> data, ResponseState state) {
+            super(data, state);
         }
 
         @Override
-        public String getDataInfo() {
+        public String getDescription() {
             return getData().toString();
         }
     }
 
-    private class OrderListResponse extends BaseResponse<List<Order>> {
+    private class OrderListResponse extends BaseResponse<Order> {
         OrderListResponse(List<Order> data) {
             super(data);
         }
 
         @Override
-        public String getDataInfo() {
+        public String getDescription() {
             return getData() == null? "":  getData().size() + " elements";
         }
     }

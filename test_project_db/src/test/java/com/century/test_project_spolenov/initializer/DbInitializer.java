@@ -16,8 +16,8 @@ import static org.dbunit.operation.DatabaseOperation.CLEAN_INSERT;
 
 @Slf4j
 public class DbInitializer {
-    @Autowired
     @Setter
+    @Autowired
     private DataSource dataSource;
 
     @Setter
@@ -48,7 +48,7 @@ public class DbInitializer {
             try {
                 CLEAN_INSERT.execute(databaseConnection, replacementDataSet);
             } catch (Exception e) {
-                log.error("Failed to execute CLEAN_INSERT:", e);
+                //log.error("Failed to execute CLEAN_INSERT:", e);
             }
 
         } finally {

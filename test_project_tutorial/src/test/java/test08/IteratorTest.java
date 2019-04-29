@@ -3,7 +3,6 @@ package test08;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static test08.IteratorUtils.interval;
 
 public class IteratorTest {

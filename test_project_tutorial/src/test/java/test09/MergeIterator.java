@@ -1,8 +1,8 @@
 package test09;
 
-import java.util.ArrayList;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Получает два Iterable, возвращающие итераторы на сортированные последовательности,
@@ -10,10 +10,13 @@ import java.util.List;
  * последовательность образованную в результате слияния
  */
 public class MergeIterator implements Iterator<Integer> {
-	
-	Iterator<Integer> one;
-	Iterator<Integer> two;
-	
+
+	private Iterator<Integer> one;
+	private Iterator<Integer> two;
+
+	private Integer currentFromFirst = null;
+	private Integer currentFromSecond = null;
+
 	public MergeIterator(Iterable<Integer> one, Iterable<Integer> two) {
 		this.one = one.iterator();
 		this.two = two.iterator();
@@ -21,14 +24,46 @@ public class MergeIterator implements Iterator<Integer> {
 
 	@Override
 	public boolean hasNext() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if(one.hasNext() || two.hasNext()){
+			return true;
+		}
+
+		return currentFromFirst != null || currentFromSecond != null;
 	}
 
 	@Override
 	public Integer next() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		Integer temp = null;
+
+        if(currentFromFirst == null && one.hasNext()){
+			currentFromFirst = one.next();
+		}
+		if(currentFromSecond == null && two.hasNext()){
+			currentFromSecond = two.next();
+		}
+
+		if(currentFromFirst == null){
+			temp = currentFromSecond;
+			currentFromSecond = null;
+		} else{
+			if(currentFromSecond == null){
+				temp = currentFromFirst;
+				currentFromFirst = null;
+			}
+		}
+
+		if(temp != null){
+			return temp;
+		}
+		if(currentFromFirst <= currentFromSecond){
+			temp = currentFromFirst;
+			currentFromFirst = null;
+		} else{
+			temp = currentFromSecond;
+			currentFromSecond = null;
+		}
+
+		return temp;
 	}
 
 	@Override

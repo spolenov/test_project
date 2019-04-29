@@ -1,10 +1,5 @@
 package test21;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Collections.binarySearch;
-
 /**
  * Получение всех элементов лежащей на одной плоскости разряженной матрицы
  * Реализация через List, более сложная и медленная

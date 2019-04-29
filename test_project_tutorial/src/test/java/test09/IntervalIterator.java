@@ -13,14 +13,13 @@ public class IntervalIterator implements Iterator<Integer> {
 
 	@Override
 	public boolean hasNext() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return current < max;
 	}
 
 	@Override
 	public Integer next() {
         // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return current++;
 	}
 
 	@Override

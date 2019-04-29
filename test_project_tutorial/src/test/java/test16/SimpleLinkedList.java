@@ -1,6 +1,7 @@
 package test16;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * 
@@ -54,20 +55,30 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 
 			@Override
 			public boolean hasNext() {
-                // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                return current.next != null;
 			}
 
 			@Override
 			public E next() {
-                // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+				Node<E> newNext = current.next.next;
+				current = new Node<E>(current, current.next.item, newNext);
+                return current.item;
 			}
 
 			@Override
 			public void remove() {
-                // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                Node<E> prev = current.prev;
+                Node<E> next = current.next;
+
+                Node<E> newNext = next == null? null: next.next;
+
+                if(next == null){
+                	current = prev;
+				} else {
+					current = new Node<E>(prev, next.item, newNext);
+				}
+
+  				size--;
 			}
 
 		};
@@ -97,8 +108,14 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 
 	// *** *** *** REMOVE *** *** ***
 	public boolean remove(Object o) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		Iterator<E> iter = this.iterator();
+		while(iter.hasNext()){
+			if(iter.next().equals(o)){
+				iter.remove();
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public E remove(int index) {
@@ -109,20 +126,48 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 	// *** *** *** OBJECT METHODS *** *** ***
 	@Override
 	public boolean equals(Object o) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if(o == null){
+			return false;
+		}
+		if(!(o instanceof SimpleList)){
+			return false;
+		}
+		if(this.size != ((SimpleList) o).size()){
+			return false;
+		}
+		Iterator iter = this.iterator();
+		Iterator iterObj = ((SimpleList)o).iterator();
+
+		while(iter.hasNext() && iterObj.hasNext()){
+			if(!(iter.next().equals(iterObj.next()))){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public int hashCode() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int result = 31;
+
+		Iterator<E> iter = this.iterator();
+		while(iter.hasNext()){
+			result += Objects.hashCode(iter.next());
+		}
+		return result;
 	}
 
 	@Override
 	public String toString() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		String result = "[";
+
+		Iterator<E> iter = this.iterator();
+		while(iter.hasNext()){
+			result += iter.next().toString() + (iter.hasNext() ? "," : "");
+		}
+
+		result += "]";
+		return result;
 	}
 
 	// ---------- internals ----------
@@ -149,8 +194,24 @@ public class SimpleLinkedList<E> implements SimpleList<E> {
 	}
 
 	private int indexOf(Object o) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int index = 0;
+
+		Iterator<E> iter = this.iterator();
+		while(iter.hasNext()){
+			E next = iter.next();
+
+			if(next == null){
+				if(o == null){
+					return index;
+				}
+			}else{
+				if(next.equals(o)){
+					return index;
+				}
+			}
+			index++;
+		}
+		return -1;
 	}
 
 	private E unlink(Node<E> x) { // todo:

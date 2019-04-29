@@ -1,5 +1,7 @@
 package test14;
 
+import test13.Address;
+
 import java.util.Comparator;
 
 /**
@@ -11,8 +13,9 @@ public class UserNameNullComparator implements Comparator<User> {
 
 	@Override
 	public int compare(User u1, User u2) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return Comparator
+				.comparing(User::getName, Comparator.nullsFirst(Comparator.naturalOrder()))
+				.thenComparing(User::getAge)
+				.compare(u1, u2);
 	}
-
 }

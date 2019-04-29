@@ -2,6 +2,8 @@ package test06;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,9 +14,28 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 class ArrayEquals {
 
-    public boolean arrayEquals(int[] arr1, int[] arr2) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+    boolean arrayEquals(int[] arr1, int[] arr2) {
+        if(arr1 == null && arr2 == null){
+            return true;
+        }
+        if(arr1 == null ^ arr2 == null){
+            return false;
+        }
+
+        if(arr1.length != arr2.length){
+            return false;
+        }
+
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+
+        for(int i = 0; i< arr1.length; i++){
+            if(arr1[i] != arr2[i]){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Test

@@ -3,9 +3,6 @@ package test21;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.binarySearch;
-
 /**
  * Данный способ хранения разряженной матрицы, 
  * сложнее реализации через Set. 

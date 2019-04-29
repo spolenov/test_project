@@ -12,12 +12,18 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.1'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.4.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.4.1'
 
     //Используем implementation, чтобы контроллер не знал о модели
     implementation project(':test_project_db')
 
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.5.RELEASE'
     compile group: 'org.springframework', name: 'spring-orm', version: '5.1.5.RELEASE'
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }

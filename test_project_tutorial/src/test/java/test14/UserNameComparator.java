@@ -9,8 +9,7 @@ public class UserNameComparator implements Comparator<User> {
 
 	@Override
 	public int compare(User user0, User user1) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return user0.getName().compareTo(user1.getName());
 	}
 	
 }

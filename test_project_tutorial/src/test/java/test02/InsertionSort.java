@@ -2,6 +2,8 @@ package test02;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 /**
@@ -10,8 +12,17 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 class InsertionSort {
 
     private static void insertionSort(int[] arr) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if(arr == null || arr.length <= 1){
+            return;
+        }
+
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < i ; j++){
+                if(arr[j] > arr[i]){
+                    swap(arr, j, i);
+                }
+            }
+        }
     }
 
     @Test
@@ -46,4 +57,34 @@ class InsertionSort {
         assertArrayEquals(expected, actual);
     }
 
+    @Test
+    void testSortWithNonUniqueElements(){
+        int[] actual = {-1,6,-7,0,6,-5,-2,-10,-4,6,-5,-1,-2,3,-2,5,-7,-7,-7,6,6,10,-9,-6,5,-5,1,-7,4,-6,8,-10,-3,-4,2,-4,-4,10,1,9,4,9,7,-8,6,2,-2,8,-2,6};
+        int[] expected = actual.clone();
+        Arrays.sort(expected);
+        insertionSort(actual);
+        assertArrayEquals(expected, actual);
+    }
+
+    private static void swap(int[] arr, int posFirst, int posSecond){
+        int bufferValue;
+
+        if(posFirst < 0 || posSecond < 0){
+            throw new IllegalArgumentException("Номер позиции не должен быть отрицательным");
+        }
+
+        if(posFirst > posSecond){
+            int bufferPos = posFirst;
+            posFirst = posSecond;
+            posSecond = bufferPos;
+        }
+
+        if(posFirst == posSecond){
+            return;
+        }
+
+        bufferValue = arr[posFirst];
+        arr[posFirst] = arr[posSecond];
+        arr[posSecond] = bufferValue;
+    }
 }

@@ -2,8 +2,8 @@ package test10;
 
 import org.junit.jupiter.api.Test;
 
-import static test10.IteratorUtils.squares;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static test10.IteratorUtils.squares;
 
 public class SquaresTest {
 

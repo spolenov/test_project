@@ -1,6 +1,9 @@
 package test15;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.max;
 
@@ -50,6 +53,11 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	@Override
 	public E get(int index) {
 		rangeCheck(index);
+
+		if(size == 0 && index == 0){
+			return null;
+		}
+
 		return data[index];
 	}
 
@@ -60,20 +68,17 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 
 			@Override
 			public boolean hasNext() {
-                // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                return current < size;
 			}
 
 			@Override
 			public E next() {
-                // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                return data[current++];
 			}
 
 			@Override
 			public void remove() {
-                // TODO реализовать метод
-                throw new UnsupportedOperationException("to do implementation");
+                SimpleArrayList.this.remove(current);
 			}
 		};
 	}
@@ -81,8 +86,18 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	// *** *** *** CHECK *** *** ***
 	@Override
 	public boolean contains(Object element) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		for(int i = 0; i < size; i++){
+			E el = this.data[i];
+
+			if(el == null && element == null){
+				return true;
+			} else{
+				if(el != null && el.equals(element)){
+					return true;
+				}
+			}
+		}
+        return false;
 	}
 
 	@Override
@@ -107,8 +122,19 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	// *** *** *** REMOVE *** *** ***
 	@Override
 	public boolean remove(Object element) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        for(int i = 0; i< size; i++){
+        	if(this.data[i].equals(element)){
+        		size--;
+        		E[] newData = (E[]) new Object[size];
+
+        		for(int j = 0; j < size + 1 && j != i ; j++){
+					newData[j] = data[j];
+				}
+        		this.data = newData;
+        		return true;
+			}
+		}
+        return false;
 	}
 
 	private void shift(int index) {
@@ -128,20 +154,40 @@ public class SimpleArrayList<E> implements SimpleList<E> {
 	// *** *** *** OBJECT METHODS *** *** ***
 	@Override
 	public boolean equals(Object o) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if(o == null){
+        	return false;
+		}
+        if(!(o instanceof SimpleList)){
+        	return false;
+		}
+        if(this.size != ((SimpleList) o).size()){
+        	return false;
+		}
+        for(int i = 0; i < this.size; i++){
+			if(!this.get(i).equals(((SimpleList)o).get(0))){
+				return false;
+			}
+		}
+        return true;
 	}
 
 	@Override
 	public int hashCode() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return Objects.hashCode(data);
 	}
 
 	@Override
 	public String toString() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		if(this.data == null){
+			return "null";
+		}
+		if(this.data.length == 0){
+			return "[]";
+		}
+        return "[" + Arrays.stream(this.data)
+				.filter(Objects::nonNull)
+				.map(Object::toString)
+				.collect(Collectors.joining(",")) + "]";
 	}
 
 	// ---------- internals ----------

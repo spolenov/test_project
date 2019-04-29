@@ -1,6 +1,8 @@
 package com.century.test_project_spolenov.service.response;
 
+import java.util.List;
+
 public interface Response <T> {
-    T getData();
-    String getDataInfo();
+    List<T> getData();
+    String getDescription();
 }

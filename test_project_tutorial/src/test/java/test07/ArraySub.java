@@ -12,8 +12,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ArraySub {
 
     private int[] arraySub(int[] arr1, int start, int length) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if(arr1 == null){
+            throw new IllegalArgumentException("Входной массив не должен быть null");
+        }
+        if(start < 0 || length < 1){
+            throw new IllegalArgumentException("Неверные входные значения индексов");
+        }
+        if(start + length > arr1.length){
+            throw new IllegalArgumentException("Индексы за пределами допустимого диапазона");
+        }
+
+        int[] result = new int[length];
+
+        int counter = 0;
+        for(int i = start; i<= start + length - 1; i++){
+            result[counter] = arr1[i];
+            counter++;
+        }
+        return result;
     }
 
     @Test
@@ -46,7 +62,6 @@ class ArraySub {
     @Test
     void testArraySub0_4() {
         int[] arr1 = {1, 3, 2};
-        arraySub(arr1, 0, 4);
         assertThrows(IllegalArgumentException.class, () -> arraySub(arr1, 0, 4));
     }
 }

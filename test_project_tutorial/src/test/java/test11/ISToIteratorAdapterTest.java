@@ -7,10 +7,10 @@ import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ISToIteratorAdapterTest {
+class ISToIteratorAdapterTest {
 
 	@Test
-	public void ISToIteratorAdapter0() {
+	void ISToIteratorAdapter0() {
 		String actual = "";
 		Iterator<Integer> iter0 = new ISToIteratorAdapter(new ByteArrayInputStream(new byte[0]));
 		while (iter0.hasNext()) {
@@ -20,7 +20,7 @@ public class ISToIteratorAdapterTest {
 	}
 
 	@Test
-	public void ISToIteratorAdapter10() {
+	void ISToIteratorAdapter10() {
 		String actual = "";
 		Iterator<Integer> iter1 = new ISToIteratorAdapter(new ByteArrayInputStream(new byte[] { 10 }));
 		while (iter1.hasNext()) {
@@ -30,7 +30,7 @@ public class ISToIteratorAdapterTest {
 	}
 
 	@Test
-	public void ISToIteratorAdapter10_20_30() {
+	void ISToIteratorAdapter10_20_30() {
 		String actual = "";
 
 		Iterator<Integer> iter3 = new ISToIteratorAdapter(new ByteArrayInputStream(new byte[] { 10, 20, 30 }));
@@ -41,7 +41,7 @@ public class ISToIteratorAdapterTest {
 	}
 
     @Test
-    public void ISToIteratorAdapterNilpotent() {
+    void ISToIteratorAdapterNilpotent() {
         String actual = "";
 
         Iterator<Integer> iter3 = new ISToIteratorAdapter(new ByteArrayInputStream(new byte[] { 10 }));

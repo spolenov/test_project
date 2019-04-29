@@ -11,24 +11,46 @@ public class SquaresIterator implements Iterator<Integer> {
 	int left;
 	int current;
 	int right;
+	boolean returnedZero = false;
 
 	public SquaresIterator(int left, int right) {
 		this.left = left;
 		this.right = right;
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		this.current = 0;
 	}
 
 	@Override
 	public boolean hasNext() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return getNextSquare() < right;
 	}
 
 	@Override
 	public Integer next() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		this.current = getNextSquare();
+
+		if(this.current == 0){
+			this.returnedZero = true;
+		}
+        return this.current;
+	}
+
+	private int getNextSquare(){
+		int result = 0;
+		int tmpSquare;
+
+		if(left == 0 && current == 0 && !returnedZero){
+			return 0;
+		}
+		if(left == 0 && current == 0){
+			return 1;
+		}
+
+		do{
+			result++;
+			tmpSquare = result * result;
+		} while (this.current == 0? tmpSquare < left: tmpSquare <= this.current);
+
+		return tmpSquare;
 	}
 
 	@Override

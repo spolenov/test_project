@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AddressTest {
+class AddressTest {
 	
 	private Address address1;
 	private Address address2;
 	
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		address1 = new Address(State.NY, "New York", "17 Avenu", 1);
 		address2 = new Address(State.NY, "New York", "17 Avenu", 1);
 	}

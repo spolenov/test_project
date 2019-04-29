@@ -1,7 +1,5 @@
 package test23;
 
-import java.util.Arrays;
-
 /**
  * Реализуйте метод toString у NestedEmployee. Он должен работать следующим образом:
  * NestedEmployee emp = ...
