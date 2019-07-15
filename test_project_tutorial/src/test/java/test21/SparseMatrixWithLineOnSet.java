@@ -8,14 +8,12 @@ public class SparseMatrixWithLineOnSet extends SparseMatrixOnSet implements Spar
 
 	@Override
 	public SparseList row(final int rowNum) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        return i -> usedIndexes.contains(new Index2D(rowNum, i)) ? 1: 0;
 	}
 
 	@Override
 	public SparseList col(final int colNum) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return i -> usedIndexes.contains(new Index2D(i, colNum)) ? 1: 0;
 	}
 
 }

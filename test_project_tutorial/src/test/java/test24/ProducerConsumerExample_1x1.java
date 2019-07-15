@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Система с одним производителем и одним потребителем
  * вроде работает нормально...
@@ -24,7 +26,9 @@ public class ProducerConsumerExample_1x1 {
             new Thread(consumer).start();
 
             // ждем пока произведется более 10000 элементов
-            while (producer.getValue() < 10000);
+            do{
+                sleep(100);
+            } while (producer.getValue() < 10000);
         });
 	}
 }

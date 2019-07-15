@@ -8,19 +8,18 @@ import java.util.Set;
  * легко добавить/получить элемент
  */
 public class SparseMatrixOnSet implements SparseMatrix {
-
 	protected final Set<Index2D> usedIndexes = new HashSet<Index2D>();
 
 	@Override
 	public int get(int rowNum, int colNum) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        if(usedIndexes.contains(new Index2D(rowNum, colNum))){
+        	return 1;
+		}
+        return 0;
 	}
 
 	@Override
 	public void set(int rowNum, int colNum) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		usedIndexes.add(new Index2D(rowNum, colNum));
 	}
-	
 }

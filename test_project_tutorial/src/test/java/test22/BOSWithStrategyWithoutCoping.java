@@ -3,6 +3,7 @@ package test22;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BOSWithStrategyWithoutCoping extends OutputStream{
@@ -23,11 +24,11 @@ public class BOSWithStrategyWithoutCoping extends OutputStream{
 		this(startSize, DEFAULT_ALLOCATE_STRATEGY);
 	}
 
-	public BOSWithStrategyWithoutCoping(AllocateStrategy strategy) {
+	BOSWithStrategyWithoutCoping(AllocateStrategy strategy) {
 		this(DEFAULT_START_SIZE, strategy);
 	}
 
-	public BOSWithStrategyWithoutCoping(int startSize,
+	BOSWithStrategyWithoutCoping(int startSize,
                                         AllocateStrategy strategy) {
 		bufferList.add(new byte[startSize]);
 		this.strategy = strategy;
@@ -54,22 +55,28 @@ public class BOSWithStrategyWithoutCoping extends OutputStream{
 	
 	@Override
 	public void write(byte b[]) throws IOException {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		for(byte bt: b){
+			write(bt);
+		}
 	}
 
 	@Override
 	public void write(byte[] b, int off, int len) throws IOException {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        for(int i = 0; i < off; i++){
+        	write(0);
+		}
+        for(int i = 0; i < len; i++){
+			write(b[i]);
+		}
 	}
 
-	public void writeTo(OutputStream out) throws IOException {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+	void writeTo(OutputStream out) throws IOException {
+		for(byte[] buff: bufferList){
+			out.write(buff);
+		}
 	}
 	
-	public byte[] toByteArray() {
+	byte[] toByteArray() {
 		// calc length byte array
 		int countByte = 0;
 		int lastArray = bufferList.size() - 1;

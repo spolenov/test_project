@@ -12,7 +12,7 @@ public class CyclicEmployee {
 	private CyclicEmployee boss;
 	private List<CyclicEmployee> subordinate;
 	
-	public CyclicEmployee(int age, String name, CyclicEmployee boss, List<CyclicEmployee> subordinate) {
+	CyclicEmployee(int age, String name, CyclicEmployee boss, List<CyclicEmployee> subordinate) {
 		this.age = age;
 		this.name = name;
 		this.boss = boss;
@@ -25,7 +25,9 @@ public class CyclicEmployee {
 
 	@Override
 	public String toString() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return "CyclicEmployee[age=" + age +
+				(name == null? "": ", name=" + name)  +
+				(boss == null? "": ", boss=" + boss)  +
+				(subordinate == null? "": ", subordinate=" + subordinate) + "]";
 	}
 }

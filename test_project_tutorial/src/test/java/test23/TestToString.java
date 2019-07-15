@@ -46,14 +46,14 @@ public class TestToString {
 		CyclicEmployee mike = new CyclicEmployee(30, "Mike", ann, sub);
 		assertEquals("CyclicEmployee[age=30, name=Mike, " +
 				"boss=CyclicEmployee[age=45, name=Ann], " +
-				"subordinate=CyclicEmployee[age=25, name=Jimmy], " +
+				"subordinate=[CyclicEmployee[age=25, name=Jimmy], " +
 					"CyclicEmployee[age=45, name=Ann]]]", mike.toString());
 	}
 
 	@Test
 	void testRecursionEmployeeNullBoss() {
 		RecursionEmployee jimmy = new RecursionEmployee(25, "Jimmy", null, null);
-		assertEquals("RecursionEmployee[age=25, name=Jimmy, boss=null, subordinate=null]]", jimmy.toString());
+		assertEquals("RecursionEmployee[age=25, name=Jimmy, boss=null, subordinate=null]", jimmy.toString());
 	}
 
 	@Test
@@ -61,7 +61,7 @@ public class TestToString {
 		RecursionEmployee ann = new RecursionEmployee(45, "Ann", null, null);
 		RecursionEmployee mike = new RecursionEmployee(30, "Mike", ann, null);
 		ann.setBoss(mike);
-		assertEquals("RecursionEmployee[age=30, name=Mike, boss=[...], subordinate=null]]", mike.toString());
+		assertEquals("RecursionEmployee[age=30, name=Mike, boss=[...], subordinate=null]", mike.toString());
 	}
 
 	@Test
@@ -71,10 +71,11 @@ public class TestToString {
 		List<RecursionEmployee> sub = Arrays.asList(jimmy, ann);
 		RecursionEmployee mike = new RecursionEmployee(30, "Mike", ann, sub);
 		ann.setBoss(mike);
-		assertEquals("RecursionEmployee[age=30, name=Mike, boss=[...] " +
-				"boss=RecursionEmployee[age=45, name=Ann, boss[...]], " +
-				"subordinate=RecursionEmployee[age=25, name=Jimmy, boss=null], " +
-					"RecursionEmployee[age=45, name=Ann]]]", mike.toString());
+		assertEquals("RecursionEmployee[age=30, " +
+				"name=Mike, boss=[...], " +
+				"subordinate=[" +
+				"RecursionEmployee[age=25, name=Jimmy, boss=null, subordinate=null], " +
+				"RecursionEmployee[age=45, name=Ann, boss=[...], subordinate=null]]]", mike.toString());
 	}
 	
 	@Test

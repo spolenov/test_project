@@ -8,12 +8,7 @@ import java.util.Random;
 
 public class BOSWithStrategyTest {
 	private final static int COUNT = 10;
-	private final static AllocateStrategy ALLOCATED_STRATEGY = new AllocateStrategy() {
-		@Override
-		public int nextAfter(int now) {
-			return now + (now << 1);
-		}
-	};
+	private final static AllocateStrategy ALLOCATED_STRATEGY = now -> now + (now << 1);
 	
 	@Test
 	void test_fillByByte_WriteTo() throws IOException {

@@ -37,9 +37,9 @@ public class XHashMap<K, V> implements XMap<K, V> {
 
 	@Override
 	public void put(K key, V value) {
-		int busketIndex = abs(key.hashCode()) % table.length;
-		Entry<K, V> currentEntry = table[busketIndex];
-		table[busketIndex] = new Entry<K, V>(key, value, currentEntry);
+		int basketIndex = abs(key.hashCode()) % table.length;
+		Entry<K, V> currentEntry = table[basketIndex];
+		table[basketIndex] = new Entry<K, V>(key, value, currentEntry);
 		size++;
 		if ((size * loadFactor) > table.length) {
 			Entry<K, V>[] newTable = new Entry[table.length * 2]; // O(n) выделение памяти быстро, заполнение нулями долго
@@ -63,20 +63,24 @@ public class XHashMap<K, V> implements XMap<K, V> {
 
 	@Override
 	public V get(K key) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int basketIndex = abs(key.hashCode()) % table.length;
+
+		if(table[basketIndex] == null){
+			return null;
+		}
+		return table[basketIndex].value;
 	}
 
 	@Override
 	public boolean containsKey(K key) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int basketIndex = abs(key.hashCode()) % table.length;
+		return table[basketIndex] != null && table[basketIndex].key != null;
 	}
 
 	@Override
 	public void remove(K key) {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		int basketIndex = abs(key.hashCode()) % table.length;
+		table[basketIndex] = null;
 	}
 
 }

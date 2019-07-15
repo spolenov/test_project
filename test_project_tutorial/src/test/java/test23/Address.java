@@ -12,7 +12,7 @@ public class Address {
 	private String street;
 	private int houseNumber;
 
-	public Address(String country, String city, String street, int houseNumber) {
+	Address(String country, String city, String street, int houseNumber) {
 		this.country = country;
 		this.city = city;
 		this.street = street;
@@ -21,8 +21,8 @@ public class Address {
 
 	@Override
 	public String toString() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		String result = "Address[country=%s, city=%s, street=%s, houseNumber=%d]";
+        return String.format(result, country, city, street, houseNumber);
 	}
 
 }

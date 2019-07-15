@@ -1,9 +1,13 @@
 package test24;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * BoundedBuffer (ограниченный буфер) на один элемент
  *
  */
+
+
 public class SingleElementBuffer {
     private Integer elem = null;
 

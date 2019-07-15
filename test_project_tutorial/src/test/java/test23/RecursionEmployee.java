@@ -1,5 +1,6 @@
 package test23;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class RecursionEmployee {
 	private String name;
 	private RecursionEmployee boss;
 	private List<RecursionEmployee> subordinate;
-	
+
 	public RecursionEmployee(int age, String name, RecursionEmployee boss, List<RecursionEmployee> subordinate) {
 		this.age = age;
 		this.name = name;
@@ -26,9 +27,20 @@ public class RecursionEmployee {
 
     @Override
     public String toString() {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+		return toString(2);
     }
+
+    private String toString(int counter){
+		if(counter < 2){
+			return "[...]";
+		}{
+			return "RecursionEmployee[" + "age=" + age + ", name=" + name + ", " +
+					"boss=" +
+						(boss == null? "null" : boss.toString(counter - 1)) + ", " +
+					"subordinate=" +
+						(subordinate == null? "null": subordinate.toString()) + "]";
+		}
+	}
 
 	public void setSubordinate(List<RecursionEmployee> subordinate) {
 		this.subordinate = subordinate;
@@ -57,5 +69,22 @@ public class RecursionEmployee {
 	public RecursionEmployee getBoss() {
 		return boss;
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		RecursionEmployee that = (RecursionEmployee) o;
+
+		if (age != that.age) return false;
+		return name != null ? name.equals(that.name) : that.name == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = age;
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		return result;
+	}
 }

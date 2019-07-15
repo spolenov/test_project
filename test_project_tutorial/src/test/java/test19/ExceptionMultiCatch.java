@@ -1,5 +1,12 @@
 package test19;
 
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 /**
  * На месте каждого комментария можно:
  * - оставить комментарий
@@ -12,29 +19,29 @@ package test19;
 */
 public class ExceptionMultiCatch {
 
-    /*String s = "";
+    String s = "";
 
     private void foo1() {
         s+="0";
         try {
             s+="1";
-            if (true) {*//**//*}
+            if (true) {}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//**//*}
+            if (true) {}
             s+="10";
         }
         s+="11";
@@ -50,23 +57,23 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//**//*}
+            if (true) {}
             s+="10";
         }
         s+="11";
@@ -82,23 +89,23 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE_1");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE_2");}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//**//*}
+            if (true) {}
             s+="10";
         }
         s+="11";
@@ -118,23 +125,23 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE_1");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE_2");}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE_3");}
             s+="10";
         }
         s+="11";
@@ -154,23 +161,23 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new RuntimeException("RTE");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//**//*}
+            if (true) {}
             s+="10";
         }
         s+="11";
@@ -186,23 +193,24 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new RuntimeException("RTE");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//*...*//*}
+            if (true) {//NOP
+                }
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE");}
             s+="10";
         }
         s+="11";
@@ -222,23 +230,25 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new RuntimeException("RTE");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//*...*//*}
+            if (true) {throw new NullPointerException("NPE");}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//*...*//*}
+            if (true) {
+                throw new NullPointerException("NPE");
+                }
             s+="10";
         }
         s+="11";
@@ -258,23 +268,23 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new RuntimeException("RTE_1");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//*...*//*}
+            if (true) {throw new RuntimeException("RTE_2");}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//**//*}
+            if (true) {}
             s+="10";
         }
         s+="11";
@@ -294,23 +304,24 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new IOException("IOE");
+            }
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//*...*//*}
+            if (true) {throw new IOException("IOE");}
             s+="10";
         }
         s+="11";
@@ -330,23 +341,23 @@ public class ExceptionMultiCatch {
         s+="0";
         try {
             s+="1";
-            if (true) {*//*...*//*}
+            if (true) {throw new IOException("IOE");}
             s+="2";
         } catch (NullPointerException e) {
             s+="3";
-            if (true) {*//**//*}
+            if (true) {}
             s+="4";
         } catch (RuntimeException e) {
             s+="5";
-            if (true) {*//**//*}
+            if (true) {}
             s+="6";
         } catch (Exception e) {
             s+="7";
-            if (true) {*//**//*}
+            if (true) {}
             s+="8";
         } finally {
             s+="9";
-            if (true) {*//**//*}
+            if (true) {}
             s+="10";
         }
         s+="11";
@@ -357,6 +368,5 @@ public class ExceptionMultiCatch {
         foo10();
         assertEquals("017891011", s);
     }
-*/
 }
 

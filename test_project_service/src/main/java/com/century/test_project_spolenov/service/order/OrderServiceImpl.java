@@ -5,19 +5,21 @@ import com.century.test_project_spolenov.service.response.ActionResponse;
 import com.century.test_project_spolenov.service.response.BaseResponse;
 import com.century.test_project_spolenov.service.response.Response;
 import com.century.test_project_spolenov.service.response.ResponseState;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.singletonList;
 
-
+@Slf4j
 public class OrderServiceImpl implements OrderService{
 
     private Response getOkOrderResponse(Order order){
         return new OrderResponse(singletonList(order), ResponseState.OK);
     }
     private Response getErrorOrderResponse(Order order){
+        log.info("test");
         return new OrderResponse(singletonList(order), ResponseState.ERROR);
     }
 

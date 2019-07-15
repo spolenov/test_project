@@ -1,6 +1,5 @@
 package test12;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 /**
