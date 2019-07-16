@@ -1,5 +1,7 @@
 package test25;
 
+import lombok.Getter;
+
 /**
  * Реализовать BlockedBoundedArrayBuffer
  * с ограниченным буфером (массивом из 10 элементов)
@@ -7,6 +9,7 @@ package test25;
  *
  */
 public class BlockedBoundedArrayBuffer {
+    @Getter
     private Integer[] buffer;
     private int size; 
     private int current = -1;
@@ -29,13 +32,20 @@ public class BlockedBoundedArrayBuffer {
     }
 
     public synchronized void put(Integer newElem) throws InterruptedException {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        while(current + 1 == buffer.length){
+            wait();
+        }
+        buffer[++current] = newElem;
+        notifyAll();
     }
 
     public synchronized Integer get() throws InterruptedException {
-        // TODO реализовать метод
-        throw new UnsupportedOperationException("to do implementation");
+        Integer result;
+        while (current + 1 == 0){
+            wait();
+        }
+        result = buffer[current--];
+        notifyAll();
+        return result;
     }
-	
 }

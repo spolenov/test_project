@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <jpa:repositories base-package="com.century.test_project_spolenov.repository" repository-impl-postfix="Impl"/>
+    <jpa:repositories base-package="com.century.test_project_spolenov.repository.*"/>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
@@ -20,7 +20,7 @@
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:~/test;MODE=Oracle;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS ROBOT;"/>
+        <property name="url" value="jdbc:h2:~/test;MODE=Oracle;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS TEST;"/>
 
         <property name="username" value="sa"/>
         <property name="password" value=""/>
@@ -28,7 +28,7 @@
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.century.test_project_spolenov.model"/>
+        <property name="packagesToScan" value="com.century.test_project_spolenov.model.*"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="database" value="H2"/>
@@ -39,15 +39,10 @@
     </bean>
 
     <beans>
-        <bean id="dbInitilizer_store" class="com.century.test_project_spolenov.initializer.DbInitializer">
-            <constructor-arg name="dataset" value="/dataset/robot.xml"/>
+        <bean id="dbInitilizer_test" class="com.century.test_project_spolenov.initializer.DbInitializer">
+            <constructor-arg name="dataset" value="/dataset/test.xml"/>
             <property name="dataSource" ref="dataSource"/>
             <property name="schema" value="store"/>
-        </bean>
-        <bean id="dbInitilizer_public" class="com.century.test_project_spolenov.initializer.DbInitializer">
-            <constructor-arg name="dataset" value="/dataset/public.xml"/>
-            <property name="dataSource" ref="dataSource"/>
-            <property name="schema" value="public"/>
         </bean>
         <bean class="com.century.test_project_spolenov.initializer.DbInitializerList"/>
     </beans>

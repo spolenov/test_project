@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -13,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ProducerConsumerSleepExample_3_0x1_0 {
     @Test
     void testProducerConsumerExample_3_0x1_0() {
-        Assertions.assertTimeout(Duration.ofMillis(30000), () ->{
+        final int timeout = 30000;
+
+        Assertions.assertTimeoutPreemptively(Duration.ofMillis(timeout), () ->{
             BlockedBoundedArrayBuffer buffer = new BlockedBoundedArrayBuffer();
             Producer producer = new Producer(1, 0, buffer);
             new Thread(producer, "Producer1").start();
@@ -22,7 +26,8 @@ public class ProducerConsumerSleepExample_3_0x1_0 {
             new Thread(new Consumer(0, buffer), "Consumer3").start();
 
             // ждем пока произведется более 10000 элементов
-            while (producer.getValue() < 10000);
+            await().atMost(timeout, TimeUnit.MILLISECONDS)
+                    .until(() -> producer.getValue() >= 10000);
 
             // проверяем размер буфера
             assertTrue(buffer.getSize() == 10);

@@ -1,5 +1,6 @@
 package test26;
 
+import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -12,16 +13,38 @@ public class SingleElementBufferTimed {
 
 	public synchronized void put(Integer newElem, long timeout)
 			throws InterruptedException, TimeoutException {
+		long startMillis = new Date().getTime();
+		long millis;
+
 		while (elem != null ) {
-			wait();
+			wait(timeout);
+
+			millis = new Date().getTime() - startMillis;
+
+			if(millis >= timeout){
+				throw new TimeoutException("Adding element timeout of " + timeout + " " +
+						"millis has been exceeded.");
+			}
 		}
 		this.elem = newElem;
 		this.notifyAll();
 	}
 
 	public synchronized Integer get(long timeout) throws InterruptedException, TimeoutException {
+		long startMillis = new Date().getTime();
+		long millis;
+
 		while (elem == null) {
-			wait();
+			wait(timeout);
+
+			millis = new Date().getTime() - startMillis;
+
+			if(millis >= timeout){
+				throw new TimeoutException("Getting element timeout of " + timeout + " " +
+						"millis has been exceeded.");
+			}
+
+
 		}
 		int result = this.elem;
 		this.elem = null;

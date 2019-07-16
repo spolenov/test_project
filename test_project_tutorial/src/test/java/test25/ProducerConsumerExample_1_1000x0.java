@@ -14,7 +14,7 @@ public class ProducerConsumerExample_1_1000x0 {
     @Test
     void testProducerConsumerExample_1_1000x0() throws InterruptedException {
 
-        Assertions.assertTimeout(Duration.ofMillis(30000), () ->{
+        Assertions.assertTimeoutPreemptively(Duration.ofMillis(30000), () ->{
             BlockedBoundedArrayBuffer buffer = new BlockedBoundedArrayBuffer();
             Producer producer = new Producer(1, 1000, buffer);
             new Thread(producer,"Producer1").start();

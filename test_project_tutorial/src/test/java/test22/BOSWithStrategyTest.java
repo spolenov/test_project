@@ -67,20 +67,19 @@ public class BOSWithStrategyTest {
 		Random dataRnd = new Random(0);
 		Random arraySizeRnd = new Random(1);
 		
-		int wroteSize = 0;
-		while (wroteSize < COUNT) {
+		int writtenSize = 0;
+		while (writtenSize < COUNT) {
 			int newBuffSize = 1 + arraySizeRnd.nextInt(10);
 			if (newBuffSize == 1) {
 				result.write((byte) dataRnd.nextInt());
-				wroteSize +=1;
 			} else {
 				byte[] buff = new byte[newBuffSize];
 				for (int k = 0; k < buff.length; k++) {
 					buff[k] = (byte) dataRnd.nextInt();
 				}
 				result.write(buff);
-				wroteSize +=1;
 			}
+			writtenSize +=1;
 		}
 		
 		return result;

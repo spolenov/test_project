@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * второе число в очередь еще занятую первым числом)
  *
  */
-public class ProducerConsumerExample_1x0 {
+class ProducerConsumerExample_1x0 {
 
     @Test
     void testProducerConsumer_1x0() {

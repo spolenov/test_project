@@ -1,11 +1,14 @@
 package com.century.test_project_spolenov.service.order;
 
 import com.century.test_project_spolenov.model.order.Order;
+import com.century.test_project_spolenov.repository.order.OrderRepository;
 import com.century.test_project_spolenov.service.response.ActionResponse;
 import com.century.test_project_spolenov.service.response.BaseResponse;
 import com.century.test_project_spolenov.service.response.Response;
 import com.century.test_project_spolenov.service.response.ResponseState;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,14 @@ import java.util.List;
 import static java.util.Collections.singletonList;
 
 @Slf4j
+@Service
 public class OrderServiceImpl implements OrderService{
+    private OrderRepository orderRepository;
+
+    @Autowired
+    public OrderServiceImpl(OrderRepository orderRepository){
+        this.orderRepository = orderRepository;
+    }
 
     private Response getOkOrderResponse(Order order){
         return new OrderResponse(singletonList(order), ResponseState.OK);
@@ -26,10 +36,8 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Response getAll() {
         List<Order> responses = new ArrayList<>();
-        responses.add(new Order(1));
-        responses.add(new Order(2));
 
-        return new OrderListResponse(responses);
+        return new OrderListResponse(orderRepository.findAll());
     }
 
     private class OrderResponse extends ActionResponse<Order> {

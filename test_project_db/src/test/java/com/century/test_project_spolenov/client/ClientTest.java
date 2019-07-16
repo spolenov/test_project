@@ -1,6 +1,6 @@
 package com.century.test_project_spolenov.client;
 
-import com.century.test_project_spolenov.model.client.Goods;
+import com.century.test_project_spolenov.model.client.Client;
 import com.century.test_project_spolenov.repository.client.ClientRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,10 +16,10 @@ class ClientTest {
     @Autowired
     private ClientRepository clientRepository;
 
-    private Goods goods = new Goods();
+    private Client client = new Client();
 
     @Test
     void testSaveGoods(){
-        assertNotNull(clientRepository.save(goods));
+        assertNotNull(clientRepository.save(client));
     }
 }

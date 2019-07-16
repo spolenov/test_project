@@ -2,6 +2,7 @@ package com.century.test_project_spolenov.service.response;
 
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,6 +15,10 @@ public abstract class BaseResponse<T> implements Response{
     }
 
     public BaseResponse(List<T> data){
+        if(data == null){
+            this.data = new ArrayList<>();
+            return;
+        }
         this.data = data;
     }
 }

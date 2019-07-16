@@ -1,11 +1,15 @@
 package test25;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Класс-потребитель (consumer), 
  * с максимальной скоростью изымает числа из буфера (buffer.get()), 
  * выводит в консоль, повторяет (while(true) {...}).
  *
  */
+
+@Slf4j
 public class Consumer implements Runnable {
     private final BlockedBoundedArrayBuffer buffer;
 	private int period;
@@ -20,10 +24,10 @@ public class Consumer implements Runnable {
         while (true) {
             try {
                 int elem = buffer.get();
-                System.out.println(" - " + elem + " " + Thread.currentThread().getName());
+                log.info("{}: consumed {}", Thread.currentThread().getName(), elem);
                 Thread.sleep(period);
             } catch (InterruptedException e) {
-                System.out.println(Thread.currentThread().getName() + " stopped.");
+                log.error (Thread.currentThread().getName() + " stopped.", e);
                 return;
             }
         }

@@ -1,10 +1,6 @@
 plugins {
     id 'java'
-    id 'io.freefair.lombok' version '3.2.1'
 }
-
-version '1.0-SNAPSHOT'
-group 'test_project'
 
 sourceCompatibility = 1.8
 
@@ -14,14 +10,17 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.1'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.4.1'
-
     //Используем implementation, чтобы контроллер не знал о модели
     implementation project(':test_project_db')
 
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.4.1'
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.4.1'
+
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.1.5.RELEASE'
     compile group: 'org.springframework', name: 'spring-orm', version: '5.1.5.RELEASE'
+
+    compileOnly "org.projectlombok:lombok:1.18.8"
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
 }
 
 compileJava.options.encoding = 'UTF-8'

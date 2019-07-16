@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * Producer put every 100 millisecond, timeout - 100 millisecond
@@ -14,7 +17,9 @@ public class SingleConsumerToProducerBufferTimedTest {
 
     @Test
     void testSingleConsumerToProducerBufferTimed() {
-		Assertions.assertTimeout(Duration.ofMillis(10000), () ->{
+    	final int timeout = 10000;
+
+		Assertions.assertTimeoutPreemptively(Duration.ofMillis(timeout), () ->{
 			SingleElementBufferTimed buffer = new SingleElementBufferTimed();
 			long start = System.nanoTime();
 			Thread producer = new Thread(new ProducerTimed(1, 100, buffer, 100), "Producer");
@@ -30,8 +35,9 @@ public class SingleConsumerToProducerBufferTimedTest {
 			consumer.start();
 			System.out.println("finish " + (System.nanoTime() - start));
 
-			while(!(producer.getState() == Thread.State.TERMINATED
-					&& consumer.getState() == Thread.State.TERMINATED));
+			await().atMost(timeout, TimeUnit.MILLISECONDS)
+					.until(() -> producer.getState() == Thread.State.TERMINATED
+							&& consumer.getState() == Thread.State.TERMINATED);
 			// Зависания не должно быть.
 			// Работа программы завершается по time out!
 		});

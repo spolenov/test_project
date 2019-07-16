@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  *
  */
 
-public class ProducerConsumerExample_0x1 {
+class ProducerConsumerExample_0x1 {
     @Test
     void testProducerConsumer_0x1() {
 		SingleElementBuffer buffer = new SingleElementBuffer();

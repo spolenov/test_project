@@ -1,11 +1,15 @@
 package test26;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.TimeoutException;
 
 /**
  * Потребитель для буфера
  *
  */
+
+@Slf4j
 public class ConsumerTimed implements Runnable {
     private final SingleElementBufferTimed buffer;
     private final long timeout;
@@ -20,12 +24,12 @@ public class ConsumerTimed implements Runnable {
         while (true) {
             try {
                 int elem = buffer.get(timeout);
-                System.out.println(elem + " consumed");
+                log.info(elem + " consumed");
             } catch (InterruptedException e) {
-                System.out.println(Thread.currentThread().getName() + " stopped.");
+                log.info(Thread.currentThread().getName() + " stopped.", e);
                 return;
             } catch (TimeoutException e) {
-                System.out.println(Thread.currentThread().getName() + " time out.");
+                log.info(Thread.currentThread().getName() + " has timed out.", e);
                 return;
             }
         }

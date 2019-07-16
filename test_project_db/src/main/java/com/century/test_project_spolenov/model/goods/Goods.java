@@ -1,4 +1,4 @@
-package com.century.test_project_spolenov.model.client;
+package com.century.test_project_spolenov.model.goods;
 
 import lombok.Data;
 

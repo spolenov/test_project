@@ -12,16 +12,16 @@ import static java.lang.Thread.sleep;
  * вроде работает нормально...
  *
  */
-public class ProducerConsumerExample_1x1 {
+class ProducerConsumerExample_1x1 {
 
     // Условно считаем, что если за 30 секунд работы
     // удалось произвести 10000 элементов, то зацикливания нет
     @Test
     void testProducerConsumer_1x1() {
-        Assertions.assertTimeout(Duration.ofMillis(30000), () ->{
-            SingleElementBuffer buffer = new SingleElementBuffer();
+        Assertions.assertTimeoutPreemptively(Duration.ofMillis(30000), () ->{
+            SingleElementBuffer<Integer> buffer = new SingleElementBuffer<>();
             Consumer consumer = new Consumer(buffer);
-            Producer producer = new Producer(1, 1, buffer);
+            Producer producer = new Producer(1, 2, buffer);
             new Thread(producer).start();
             new Thread(consumer).start();
 

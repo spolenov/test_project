@@ -1,5 +1,11 @@
 package test24;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.TimeUnit;
+
+import static org.awaitility.Awaitility.await;
+
 /**
  * Класс-производитель (producer), 
  * производит последовательно числа начиная со startValue 
@@ -8,12 +14,13 @@ package test24;
  * повторяет (while(true) {...})
  *
  */
+@Slf4j
 public class Producer implements Runnable {
     private int value;
     private final int period;
-    private final SingleElementBuffer buffer;
+    private final SingleElementBuffer<Integer> buffer;
 
-    public Producer(int startValue, int period, SingleElementBuffer buffer) {
+    public Producer(int startValue, int period, SingleElementBuffer<Integer> buffer) {
         this.buffer = buffer;
         this.period = period;
         this.value = startValue;
@@ -27,9 +34,12 @@ public class Producer implements Runnable {
     public void run() {
         while (true) {
             try {
-                System.out.println(value + " produced");
+                log.info(value + " produced");
                 buffer.put(value++);
+
                 Thread.sleep(period);
+
+                //await().atLeast(period, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 System.out.println(Thread.currentThread().getName() + " stopped.");
                 return;

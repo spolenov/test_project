@@ -12,6 +12,21 @@ plugins {
 
     // Apply the application plugin to add support for building an application
     id 'application'
+
+    //!Добавляем пдагин в конфиги модулей,
+    //иначе выражения slf4j/lombok не скомпилируются
+    id 'io.freefair.lombok' version '3.8.0'
+    
+    id 'org.springframework.boot' version "2.1.6.RELEASE"
+
+}
+
+apply plugin: 'war'
+
+allprojects {
+    apply plugin: 'java'
+    group 'test_project'
+    version '1.0'
 }
 
 repositories {
@@ -23,25 +38,51 @@ repositories {
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
+    implementation project(':test_project_web')
 }
 
 // Define the main class for the application
 mainClassName = 'test_project.App'
 
-Closure cl = { task -> println "I'm $task.project.name" }
-task('hello').doLast(cl)
+Closure projectName = {t -> t.project.name}
+Closure cl = { task -> print "I'm " + projectName((Task)task) + "."}
+Closure cl2 = { task -> print " Nice to meet you." }
+Closure echoPath = { path -> print " This task's path is ${path}\n"}
+
+//Инициализация -> конфигурация -> выполнение
+//Блок конфигурации
+task hello2
+task hello3
+
+hello2{
+    println 'config block #1: hello2'
+}
+hello2{
+    println 'config block #2: hello2'
+}
+
+hello3{
+    println 'config block: hello3'
+}
+
+//Зависимости
+task hello(dependsOn: [hello2, hello3])
+
+//Блоки операций
+hello.doFirst(cl).doLast(cl2).doLast(echoPath)
 
 project(':test_project_db') {
-    task('hello').doLast(cl)
+    task('hello').doFirst(cl).doLast(cl2).doLast(echoPath)
 }
 project(':test_project_service') {
-    task('hello').doLast(cl)
+    task('hello').doFirst(cl).doLast(cl2).doLast(echoPath)
 }
 project(':test_project_web') {
-    task('hello').doLast(cl)
-}
-project(':test_project_tutorial') {
-    task('hello').doLast(cl)
+    task('hello').doFirst(cl).doLast(cl2).doLast(echoPath)
 }
 
+def profiles = 'test'
 
+bootRun {
+    args = ["--spring.profiles.active=" + profiles]
+}

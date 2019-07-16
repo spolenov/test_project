@@ -1,5 +1,7 @@
 package test25;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Класс-производитель (producer), 
  * производит последовательно числа начиная со startValue 
@@ -8,6 +10,7 @@ package test25;
  * повторяет (while(true) {...})
  *
  */
+@Slf4j
 public class Producer implements Runnable {
     private int value;
     private final int period;
@@ -28,6 +31,7 @@ public class Producer implements Runnable {
         while (true) {
             try {
                 buffer.put(value++);
+                log.info("{}: produced {}", Thread.currentThread().getName(), value);
                 Thread.sleep(period);
             } catch (InterruptedException e) {
                 System.out.println(Thread.currentThread().getName() + " stopped.");

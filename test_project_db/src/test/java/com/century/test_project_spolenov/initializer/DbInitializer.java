@@ -48,7 +48,7 @@ public class DbInitializer {
             try {
                 CLEAN_INSERT.execute(databaseConnection, replacementDataSet);
             } catch (Exception e) {
-                //log.error("Failed to execute CLEAN_INSERT:", e);
+                log.error("Failed to execute CLEAN_INSERT:", e);
             }
 
         } finally {
