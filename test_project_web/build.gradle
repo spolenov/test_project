@@ -20,8 +20,26 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
 }
 
+apply plugin: 'war'
+apply from: 'https://raw.github.com/gretty-gradle-plugin/gretty/master/pluginScripts/gretty.plugin'
+
 compileJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
+
+gretty {
+    managedClassReload = true
+    servletContainer = 'jetty8'
+}
+
+/*
+war {
+    from('/') {
+        include 'profile_prod.properties'
+        include 'profile_test.properties'
+    }
+}
+*/
+

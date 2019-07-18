@@ -16,17 +16,47 @@ plugins {
     //!Добавляем пдагин в конфиги модулей,
     //иначе выражения slf4j/lombok не скомпилируются
     id 'io.freefair.lombok' version '3.8.0'
-    
+
     id 'org.springframework.boot' version "2.1.6.RELEASE"
 
 }
-
-apply plugin: 'war'
 
 allprojects {
     apply plugin: 'java'
     group 'test_project'
     version '1.0'
+
+    project.ext.set("profile", 'dev')
+}
+
+subprojects {
+    task copyProfileProperties(type: Copy){
+        def extension = '.properties'
+
+        def filename = 'profile_' + project.profile + extension
+        def dirSrc = 'src/main/resources/'
+        def dirDest = 'src/main/resources/profile'
+
+        if(!project.profile){
+            throw new GradleException(
+                    'Failed to set profile settings for ' + project.name + ' ' +
+                            'project.profile is ' + project.profile)
+        }
+
+        if (file(dirSrc + filename).exists()){
+            from file(dirSrc + filename)
+            into file(dirDest)
+
+            rename { f ->
+                f.replace filename, 'profile' + extension
+            }
+            println 'Project: [' + project.name + ']:\n' +
+                    'Using profile_' + filename + ' file for ' +
+                    'profile settings.'
+        }
+    }
+
+    clean.finalizedBy copyProfileProperties
 }
 
 repositories {
@@ -47,7 +77,7 @@ mainClassName = 'test_project.App'
 Closure projectName = {t -> t.project.name}
 Closure cl = { task -> print "I'm " + projectName((Task)task) + "."}
 Closure cl2 = { task -> print " Nice to meet you." }
-Closure echoPath = { path -> print " This task's path is ${path}\n"}
+Closure echoPath = { path -> print " This task's path is ${path}\n."}
 
 //Инициализация -> конфигурация -> выполнение
 //Блок конфигурации
@@ -65,6 +95,7 @@ hello3{
     println 'config block: hello3'
 }
 
+
 //Зависимости
 task hello(dependsOn: [hello2, hello3])
 
@@ -81,8 +112,6 @@ project(':test_project_web') {
     task('hello').doFirst(cl).doLast(cl2).doLast(echoPath)
 }
 
-def profiles = 'test'
+apply from: 'gradle/profiles/profiles.gradle'
 
-bootRun {
-    args = ["--spring.profiles.active=" + profiles]
-}
+

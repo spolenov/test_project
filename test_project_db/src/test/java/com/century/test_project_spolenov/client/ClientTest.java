@@ -20,6 +20,7 @@ class ClientTest {
 
     @Test
     void testSaveGoods(){
+        client.setId(1000);
         assertNotNull(clientRepository.save(client));
     }
 }
