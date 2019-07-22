@@ -1,0 +1,56 @@
+subprojects {
+    task setProfileTest
+    Object[] taskNames = project.gradle.startParameter.taskNames
+
+    setProfileTest {
+        if (taskNames.contains('setProfileTest') || taskNames.contains('warTest')){
+            project.ext.set('profile', 'test')
+        }
+    }
+
+    task setProfileDev
+    setProfileDev {
+        if (taskNames.contains('setProfileDev') || taskNames.contains('warDev')){
+            project.ext.set('profile', 'dev')
+        }
+    }
+
+    task setProfileProd
+    setProfileProd {
+        if (taskNames.contains('setProfileProd') || taskNames.contains('warProd')){
+            project.ext.set('profile', 'prod')
+        }
+    }
+
+    task copyProfileProperties(type: Copy) {
+        def extension = '.properties'
+        def filename = 'profile_' + project.profile + extension
+        def dirSrc = 'src/main/resources/'
+        def dirDest = 'src/main/resources/profile'
+
+        println("copyProfileProperties: " + project.profile)
+
+        if (!project.profile) {
+            throw new GradleException(
+                    'Failed to set profile settings for ' + project.name + ' ' +
+                            'project.profile is ' + project.profile)
+        }
+
+        if (file(dirSrc + filename).exists()) {
+            from file(dirSrc + filename)
+            into file(dirDest)
+
+            rename { f ->
+                f.replace filename, 'profile' + extension
+            }
+            println 'Using ' + filename + ' ' +
+                    'file for ' + '[' + project.name + ']'
+            return
+        }
+    }
+
+    setProfileProd.finalizedBy copyProfileProperties
+    setProfileDev.finalizedBy copyProfileProperties
+    setProfileTest.finalizedBy copyProfileProperties
+}
+

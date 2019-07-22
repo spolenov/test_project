@@ -18,6 +18,9 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.9'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
+
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.8.0-beta4'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.3.0-alpha4'
 }
 
 apply plugin: 'war'
@@ -34,12 +37,10 @@ gretty {
     servletContainer = 'jetty8'
 }
 
-/*
-war {
-    from('/') {
-        include 'profile_prod.properties'
-        include 'profile_test.properties'
-    }
-}
-*/
+task warTest(dependsOn: [setProfileTest])
+task warDev(dependsOn: [setProfileDev])
+task warProd(dependsOn: [setProfileProd])
 
+warTest.finalizedBy(war)
+warDev.finalizedBy(war)
+warProd.finalizedBy(war)

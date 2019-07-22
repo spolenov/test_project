@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
     public Response getAll() {
         List<Order> responses = new ArrayList<>();
 
-        return new OrderListResponse(orderRepository.findAll());
+        return new OrderListResponse(orderRepository.findById(1).orElse(null));
     }
 
     private class OrderResponse extends ActionResponse<Order> {
@@ -53,6 +53,10 @@ public class OrderServiceImpl implements OrderService{
 
     private class OrderListResponse extends BaseResponse<Order> {
         OrderListResponse(List<Order> data) {
+            super(data);
+        }
+
+        OrderListResponse(Order data) {
             super(data);
         }
 

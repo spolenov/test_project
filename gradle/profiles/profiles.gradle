@@ -1,5 +1,0 @@
-subprojects {
-    def currentProfile = project.profile
-    apply from: rootProject.file('gradle/profiles/profile_' + currentProfile + '.gradle');
-    println 'Using profile: "' + currentProfile + '" for ' + project.getName()
-}

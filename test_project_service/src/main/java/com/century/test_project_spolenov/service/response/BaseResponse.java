@@ -21,4 +21,15 @@ public abstract class BaseResponse<T> implements Response{
         }
         this.data = data;
     }
+
+    public BaseResponse(T data){
+        if(data == null){
+            this.data = new ArrayList<>();
+            return;
+        }
+        List<T> newData = new ArrayList<>();
+        newData.add(data);
+
+        this.data = newData;
+    }
 }

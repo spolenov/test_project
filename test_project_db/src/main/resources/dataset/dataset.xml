@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <client id = "1" client_name = "Иванов Иван Иванович"/>
+    <client id = "2" client_name = "Сидоров Сидор Сидорович"/>
+    <client id = "3" client_name = "Кириллов Кирилл Кириллович"/>
+
+    <goods id = "1" price = "50.0" name = "яСепульки жареные 5x100г"/>
+    <goods id = "2" price = "150.0" name = "яКартофельные эллипсы 10х1000г"/>
+    <goods id = "3" price = "250.0" name = "Говяжьи пирамидки 1кг"/>
+
+    <order_head id = "1" client_id = "1" date = "2019-07-01 00:00:30" address = "Республика Беларусь, г. Минск, ул. Картофельная, д. 148, кв. 42"/>
+    <order_head id = "2" client_id = "1" date = "2019-07-01 00:00:35" address = "Республика Казахстан, г. Кокшетау, ул. Елбасы, д. 404, кв. -1"/>
+    <order_head id = "3" client_id = "2" date = "2019-07-01 00:00:40" address = "РФ, г. Москва, ул. Красная, д. 1, кв. 15"/>
+    <order_head id = "4" client_id = "3" date = "2019-07-01 00:00:45" address = "Китайская Народная Республика, г. Гуанчжоу, ул. Фуцянь, д. 1024, кв. 768"/>
+
+    <order_line id = "1" order_id = "1" goods_id = "1" item_count = "5"/>
+    <order_line id = "2" order_id = "1" goods_id = "1" item_count = "5"/>
+    <order_line id = "3" order_id = "2" goods_id = "2" item_count = "5"/>
+    <order_line id = "4" order_id = "3" goods_id = "1" item_count = "5"/>
+    <order_line id = "5" order_id = "3" goods_id = "3" item_count = "5"/>
+    <order_line id = "6" order_id = "3" goods_id = "1" item_count = "5"/>
+    <order_line id = "7" order_id = "4" goods_id = "3" item_count = "5"/>
+
+</dataset>

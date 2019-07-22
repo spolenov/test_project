@@ -17,46 +17,20 @@ plugins {
     //иначе выражения slf4j/lombok не скомпилируются
     id 'io.freefair.lombok' version '3.8.0'
 
-    id 'org.springframework.boot' version "2.1.6.RELEASE"
+    //id 'org.springframework.boot' version "2.1.6.RELEASE"
 
 }
+
+sourceCompatibility = 1.8
 
 allprojects {
     apply plugin: 'java'
     group 'test_project'
     version '1.0'
-
-    project.ext.set("profile", 'dev')
 }
 
-subprojects {
-    task copyProfileProperties(type: Copy){
-        def extension = '.properties'
-
-        def filename = 'profile_' + project.profile + extension
-        def dirSrc = 'src/main/resources/'
-        def dirDest = 'src/main/resources/profile'
-
-        if(!project.profile){
-            throw new GradleException(
-                    'Failed to set profile settings for ' + project.name + ' ' +
-                            'project.profile is ' + project.profile)
-        }
-
-        if (file(dirSrc + filename).exists()){
-            from file(dirSrc + filename)
-            into file(dirDest)
-
-            rename { f ->
-                f.replace filename, 'profile' + extension
-            }
-            println 'Project: [' + project.name + ']:\n' +
-                    'Using profile_' + filename + ' file for ' +
-                    'profile settings.'
-        }
-    }
-
-    clean.finalizedBy copyProfileProperties
+subprojects{
+    project.ext.set('profile', '<NOT SET>')
 }
 
 repositories {
@@ -112,6 +86,7 @@ project(':test_project_web') {
     task('hello').doFirst(cl).doLast(cl2).doLast(echoPath)
 }
 
-apply from: 'gradle/profiles/profiles.gradle'
+apply from: 'gradle/properties.gradle'
+apply from: 'gradle/profiles.gradle'
 
 

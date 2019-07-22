@@ -1,0 +1,12 @@
+subprojects {
+    def currentProfile = project.profile
+    def gradleFile = 'gradle/profiles/profile_' + currentProfile + '.gradle'
+    
+    if (file(gradleFile).exists()){
+        apply from: project.file(gradleFile);
+        println 'Using ' + gradleFile + ' for [' + project.getName() + ']'
+    } else{
+        //println 'Profile is not set for ' + project.getName() + '! ' +
+                //'Current variable value is ' + project.profile
+    }
+}
