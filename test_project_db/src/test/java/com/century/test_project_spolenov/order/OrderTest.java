@@ -1,6 +1,8 @@
 package com.century.test_project_spolenov.order;
 
+import com.century.test_project_spolenov.model.goods.Goods;
 import com.century.test_project_spolenov.model.order.Order;
+import com.century.test_project_spolenov.model.order.OrderLine;
 import com.century.test_project_spolenov.repository.order.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,16 +44,14 @@ class OrderTest {
 
     @Test
     void getOrderByIdTest(){
-        final int TEST_ID = 1;
-        Order existingOrder = orderRepository.findAll().get(0);
-        existingOrder.setId(TEST_ID);
+        List<Order> orders = orderRepository.findAll();
 
-        orderRepository.save(existingOrder);
+        for(Order order: orders){
+            Order foundOrder = orderRepository.findById(order.getId()).orElse(null);
+            assertNotNull(foundOrder);
 
-        Order order = orderRepository.findById(TEST_ID).orElse(null);
-        assertNotNull(order);
-
-        assertEquals(order.getId(), TEST_ID);
+            assertEquals(foundOrder.getId(), order.getId());
+        }
     }
 
     @Test
@@ -91,7 +90,37 @@ class OrderTest {
     }
 
     @Test
-    void testToString(){
+    void addNewLineTest(){
+        Order order = orderRepository.findAll()
+                .stream()
+                .findAny()
+                .orElse(null);
+        assertNotNull(order);
+
+        int orderId = order.getId();
+        int linesCount = order.getLines().size();
+        assertTrue(linesCount > 0);
+
+        OrderLine newLine = new OrderLine();
+        newLine.setOrder(order);
+
+        Goods newGoods = new Goods();
+        newGoods.setId(1);
+
+        newLine.setGoods(newGoods);
+        newLine.setCount(1);
+        order.getLines().add(newLine);
+
+        orderRepository.save(order);
+        order = orderRepository.findById(orderId).orElse(null);
+        assertNotNull(order);
+        assertNotNull(order.getLines());
+
+        assertEquals(linesCount + 1, order.getLines().size());
+    }
+
+    @Test
+    void toStringTest(){
         assertFalse(new Order().toString().isEmpty());
     }
 }

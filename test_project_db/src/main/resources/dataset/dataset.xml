@@ -1,17 +1,26 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-    <client id = "1" client_name = "Иванов Иван Иванович"/>
-    <client id = "2" client_name = "Сидоров Сидор Сидорович"/>
-    <client id = "3" client_name = "Кириллов Кирилл Кириллович"/>
+    <client id = "1" name = "Иванов Иван Иванович"/>
+    <client id = "2" name = "Сидоров Сидор Сидорович"/>
+    <client id = "3" name = "Кириллов Кирилл Кириллович"/>
+    <client id = "4" name = "Петров Пётр Петрович"/>
+    <client id = "5" name = "Ли Куан Ю"/>
 
     <goods id = "1" price = "50.0" name = "яСепульки жареные 5x100г"/>
-    <goods id = "2" price = "150.0" name = "яКартофельные эллипсы 10х1000г"/>
+    <goods id = "2" price = "150.0" name = "яКартофельная оболочка 10х1000г"/>
     <goods id = "3" price = "250.0" name = "Говяжьи пирамидки 1кг"/>
+    <goods id = "4" price = "0.01" name = " яНеиспользуемый товар|\■"/>
+    <goods id = "5" price = "0.02" name = " яНеиспользуемый товар2"/>
+    <goods id = "6" price = "0.03" name = " яНеиспользуемый товар3"/>
+    <goods id = "7" price = "0.04" name = " яНеиспользуемый товар4"/>
+    <goods id = "8" price = "0.04" name = " яНеиспользуемый товар5"/>
 
     <order_head id = "1" client_id = "1" date = "2019-07-01 00:00:30" address = "Республика Беларусь, г. Минск, ул. Картофельная, д. 148, кв. 42"/>
-    <order_head id = "2" client_id = "1" date = "2019-07-01 00:00:35" address = "Республика Казахстан, г. Кокшетау, ул. Елбасы, д. 404, кв. -1"/>
+    <order_head id = "2" client_id = "5" date = "2019-07-01 00:00:35" address = "Республика Казахстан, г. Кокшетау, ул. Елбасы, д. 404, кв. -1"/>
     <order_head id = "3" client_id = "2" date = "2019-07-01 00:00:40" address = "РФ, г. Москва, ул. Красная, д. 1, кв. 15"/>
     <order_head id = "4" client_id = "3" date = "2019-07-01 00:00:45" address = "Китайская Народная Республика, г. Гуанчжоу, ул. Фуцянь, д. 1024, кв. 768"/>
+    <order_head id = "5" client_id = "4" date = "2019-07-01 00:00:50" address = "Антарктида, полярная станция Восток, д.14, кв.2"/>
+    <order_head id = "6" client_id = "5" date = "2019-07-01 00:00:55" address = "о. Гренландия, Нуук, ул. Иванова, д.10, кв.101"/>
 
     <order_line id = "1" order_id = "1" goods_id = "1" item_count = "5"/>
     <order_line id = "2" order_id = "1" goods_id = "1" item_count = "5"/>
@@ -20,5 +29,18 @@
     <order_line id = "5" order_id = "3" goods_id = "3" item_count = "5"/>
     <order_line id = "6" order_id = "3" goods_id = "1" item_count = "5"/>
     <order_line id = "7" order_id = "4" goods_id = "3" item_count = "5"/>
-
+    <order_line id = "8" order_id = "5" goods_id = "1" item_count = "5"/>
+    <order_line id = "9" order_id = "5" goods_id = "2" item_count = "5"/>
+    <order_line id = "10" order_id = "5" goods_id = "3" item_count = "5"/>
+    <order_line id = "11" order_id = "5" goods_id = "4" item_count = "5"/>
+    <order_line id = "12" order_id = "5" goods_id = "5" item_count = "5"/>
+    <order_line id = "13" order_id = "5" goods_id = "6" item_count = "5"/>
+    <order_line id = "14" order_id = "5" goods_id = "7" item_count = "5"/>
+    <order_line id = "15" order_id = "6" goods_id = "1" item_count = "5"/>
+    <order_line id = "16" order_id = "6" goods_id = "2" item_count = "5"/>
+    <order_line id = "17" order_id = "6" goods_id = "3" item_count = "5"/>
+    <order_line id = "18" order_id = "6" goods_id = "4" item_count = "5"/>
+    <order_line id = "19" order_id = "6" goods_id = "5" item_count = "5"/>
+    <order_line id = "20" order_id = "6" goods_id = "6" item_count = "5"/>
+    <order_line id = "21" order_id = "6" goods_id = "7" item_count = "5"/>
 </dataset>

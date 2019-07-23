@@ -2,18 +2,20 @@ package com.century.test_project_spolenov.model.goods;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
+
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Data
 @Entity
 @Table(name = "goods", schema = "test")
-public class Goods {
+public class Goods implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = SEQUENCE, generator = "GOODS_ID_SEQ")
+    @SequenceGenerator(name = "GOODS_ID_SEQ", sequenceName = "test.goods_id_seq", allocationSize = 1)
     private int id;
 
     @Column(name = "price", nullable = false)

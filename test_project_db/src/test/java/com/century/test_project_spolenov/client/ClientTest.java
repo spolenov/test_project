@@ -49,7 +49,7 @@ class ClientTest {
     }
 
     @Test
-    void deleteByWholeEntityTest(){
+    void deleteClientByWholeEntityTest(){
         List<Client> totalClients = clientRepository.findAll();
         int sizeBefore = totalClients.size();
 
@@ -59,6 +59,7 @@ class ClientTest {
         assertNotNull(client);
 
         assertDoesNotThrow(() -> clientRepository.delete(client));
+        assertFalse(clientRepository.findById(client.getId()).isPresent());
         assertEquals(clientRepository.findAll().size(), sizeBefore - 1);
     }
 
@@ -98,14 +99,14 @@ class ClientTest {
 
 
     @Test
-    void deleteClientTest(){
-        Client Client = clientRepository.findAll()
+    void deleteClientByIdTest(){
+        Client client = clientRepository.findAll()
                 .stream()
                 .findAny()
                 .orElse(null);
-        assertNotNull(Client);
+        assertNotNull(client);
 
-        int id =  Client.getId();
+        int id =  client.getId();
         Executable ex = () ->  clientRepository.deleteById(id);
         assertDoesNotThrow(ex);
     }
@@ -113,5 +114,6 @@ class ClientTest {
     @Test
     void testToString(){
         assertFalse(new Client().toString().isEmpty());
+        assertFalse(clientRepository.findAll().get(0).toString().isEmpty());
     }
 }

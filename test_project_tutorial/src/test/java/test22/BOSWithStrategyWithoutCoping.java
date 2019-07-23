@@ -3,7 +3,6 @@ package test22;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BOSWithStrategyWithoutCoping extends OutputStream{

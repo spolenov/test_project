@@ -8,8 +8,9 @@
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <jpa:repositories base-package="com.century.test_project_spolenov.repository" repository-impl-postfix="Impl"/>
+    <import resource="spring-data-init.xml"/>
 
+    <jpa:repositories base-package="com.century.test_project_spolenov.repository" repository-impl-postfix="Impl"/>
     <tx:annotation-driven/>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -58,12 +59,10 @@
         <property name="maxActive" value="10"/>
     </bean>
 
-
     <bean id="dbInitilizer" class="com.century.test_project_spolenov.h2.initializer.DbInitializer">
         <constructor-arg name="dataset" value="/dataset/dataset.xml"/>
         <property name="dataSource" ref="dataSource"/>
         <property name="schema" value="test"/>
     </bean>
     <bean class="com.century.test_project_spolenov.h2.initializer.DbInitializerList"/>
-
 </beans>

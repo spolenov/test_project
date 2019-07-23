@@ -10,7 +10,14 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <import resource="spring/spring-data-init.xml"/>
     <jpa:repositories base-package="com.century.test_project_spolenov.repository.*"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:test.properties</value>
+        </property>
+    </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
@@ -34,17 +41,21 @@
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="database" value="H2"/>
                 <property name="generateDdl" value="true"/>
-                <property name="showSql" value="true"/>
+                <property name="showSql" value="false"/>
             </bean>
         </property>
 
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
                 <prop key="hibernate.dialect">com.century.test_project_spolenov.h2.dialect.PostgreSQLDialectForH2</prop>
                 <prop key="hibernate.hbm2ddl.auto">create</prop>
             </props>
         </property>
+    </bean>
+
+    <bean id="jdbcTemplatePg" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <beans>
@@ -55,4 +66,6 @@
         </bean>
         <bean class="com.century.test_project_spolenov.h2.initializer.DbInitializerList"/>
     </beans>
+
+
 </beans>

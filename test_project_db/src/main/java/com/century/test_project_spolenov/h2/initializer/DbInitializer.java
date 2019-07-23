@@ -2,6 +2,7 @@ package com.century.test_project_spolenov.h2.initializer;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -10,7 +11,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
@@ -21,7 +21,7 @@ import static org.dbunit.operation.DatabaseOperation.CLEAN_INSERT;
 public class DbInitializer {
     @Autowired
     @Setter
-    private DataSource dataSource;
+    private BasicDataSource dataSource;
     @Setter
     @Autowired(required = false)
     private String schema;
@@ -58,6 +58,10 @@ public class DbInitializer {
 
             statement = databaseConnection.getConnection()
                     .prepareStatement("ALTER SEQUENCE test.order_line_id_seq RESTART WITH 100000;");
+            statement.execute();
+
+            statement = databaseConnection.getConnection()
+                    .prepareStatement("ALTER SEQUENCE test.goods_id_seq RESTART WITH 100000;");
             statement.execute();
 
             CLEAN_INSERT.execute(databaseConnection, replacementDataSet);

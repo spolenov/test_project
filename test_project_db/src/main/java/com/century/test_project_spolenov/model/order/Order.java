@@ -1,12 +1,14 @@
 package com.century.test_project_spolenov.model.order;
 
 import com.century.test_project_spolenov.model.client.Client;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -19,7 +21,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_head", schema = "test")
-public class Order {
+public class Order implements Serializable {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = SEQUENCE, generator = "ORDER_HEAD_ID_SEQ")
@@ -27,6 +29,7 @@ public class Order {
     private int id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name="client_id", nullable = false)
     private Client client;
 
@@ -36,8 +39,9 @@ public class Order {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    Set<OrderLine> lines;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<OrderLine> lines;
 
     public Order(int id){
         this.id = id;

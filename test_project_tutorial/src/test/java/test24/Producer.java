@@ -2,10 +2,6 @@ package test24;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
-
-import static org.awaitility.Awaitility.await;
-
 /**
  * Класс-производитель (producer), 
  * производит последовательно числа начиная со startValue 
