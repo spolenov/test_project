@@ -7,18 +7,11 @@
  */
 
 plugins {
-    // Apply the java plugin to add support for Java
     id 'java'
-
-    // Apply the application plugin to add support for building an application
+    
     id 'application'
 
-    //!Добавляем пдагин в конфиги модулей,
-    //иначе выражения slf4j/lombok не скомпилируются
     id 'io.freefair.lombok' version '3.8.0'
-
-    //id 'org.springframework.boot' version "2.1.6.RELEASE"
-
 }
 
 sourceCompatibility = 1.8
@@ -31,7 +24,8 @@ allprojects {
 
 subprojects{
     project.ext.set('profile', '<NOT SET>')
-
+    apply plugin: 'io.freefair.lombok'
+    
     dependencies{
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.9'
         compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
@@ -46,7 +40,6 @@ repositories {
 }
 
 dependencies {
-    // This dependency is found on compile classpath of this component and consumers.
     implementation 'com.google.guava:guava:27.0.1-jre'
     implementation project(':test_project_web')
 }

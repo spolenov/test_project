@@ -3,7 +3,9 @@ package com.century.test_project_spolenov.goods;
 import com.century.test_project_spolenov.model.goods.Goods;
 import com.century.test_project_spolenov.repository.goods.GoodsRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:/spring-db-test.xml"})
+@TestMethodOrder(MethodOrderer.Random.class)
 class GoodsTest {
 
     @Autowired

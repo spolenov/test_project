@@ -1,72 +1,87 @@
 package com.century.test_project_spolenov.service.response;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = false)
+import static com.century.test_project_spolenov.service.util.ServiceUtils.getDataSizeDescription;
+
 @NoArgsConstructor
-public abstract class ActionResponse<T> extends BaseResponse{
+@EqualsAndHashCode(callSuper = true)
+public abstract class ActionResponse<T> extends BaseResponse<T>{
     //Результат действия с сущностью (сохранение, обновление, удаление и т.д.)
+    //Возможные варианты создания экземпляра - через errResponse(), okResponse()
+    @Getter
     private ResponseState state;
 
-    public List<T> getData(){
-        return super.getData();
-    }
-
-    public ActionResponse(List<T> data){
+    private ActionResponse(List<T> data){
         super(data);
     }
 
-    public ActionResponse(List<T> data, ResponseState state){
+    ActionResponse(List<T> data, ResponseState state){
         this(data);
         this.state = state;
     }
 
-    public ResponseState getState(){
-        return state;
+    ActionResponse(ResponseState state){
+        this(new ArrayList<>());
+        this.state = state;
     }
 
-    public static Response okResponse(){
-        return new ActionResponse() {
+    public static <T> ActionResponse<T> okResponse(List<T> data){
+        return new ActionResponse<T>(data, ResponseState.OK) {
             @Override
             public String getDescription() {
-                return BaseResponse.okResponse().getDescription();
-            }
-
-            @Override
-            public ResponseState getState(){
-                return ResponseState.OK;
+                if(data == null || !data.isEmpty()){
+                    return "Executed successfully";
+                }
+                return getDataSizeDescription(data);
             }
         };
     }
 
-    public static Response errResponse(String description, Exception e){
-        return new ActionResponse() {
+    public static <T> ActionResponse<T> okResponse(T data){
+        return new ActionResponse<T>(Collections.singletonList(data), ResponseState.OK) {
+            @Override
+            public String getDescription() {
+                return getDataSizeDescription(getData());
+            }
+        };
+    }
+
+    public static <T> ActionResponse<T> okResponse(){
+        return okResponse(null);
+    }
+
+    public static <T> ActionResponse<T> errResponse(String description, Exception e){
+        return new ActionResponse <T>(ResponseState.ERROR) {
             @Override
             public String getDescription() {
                 return String.format("%s: %s", description, e.getLocalizedMessage());
             }
-
-            @Override
-            public ResponseState getState(){
-                return ResponseState.ERROR;
-            }
         };
     }
 
-    public static Response errResponse(String description){
-        return new ActionResponse() {
+    public static <T> ActionResponse<T> errResponse(String description){
+        return new ActionResponse<T>(ResponseState.ERROR) {
             @Override
             public String getDescription() {
                 return description;
             }
-
-            @Override
-            public ResponseState getState(){
-                return ResponseState.ERROR;
-            }
         };
+    }
+
+    public boolean isOk(){
+        if(this.getState() == null){
+            return false;
+        }
+        return this.getState().equals(ResponseState.OK);
     }
 }

@@ -5,7 +5,9 @@ import com.century.test_project_spolenov.model.order.Order;
 import com.century.test_project_spolenov.model.order.OrderLine;
 import com.century.test_project_spolenov.repository.order.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:/spring-db-test.xml"})
+@TestMethodOrder(MethodOrderer.Random.class)
 class OrderTest {
 
     @Autowired
@@ -117,6 +120,38 @@ class OrderTest {
         assertNotNull(order.getLines());
 
         assertEquals(linesCount + 1, order.getLines().size());
+    }
+
+    @Test
+    void updateLineTest(){
+        Order order = orderRepository.findAll()
+                .stream()
+                .findAny()
+                .orElse(null);
+        assertNotNull(order);
+
+        int orderId = order.getId();
+        int linesCount = order.getLines().size();
+        assertTrue(linesCount > 0);
+
+        OrderLine currentLine = order.getLines().iterator().next();
+        int countBefore = currentLine.getCount();
+        int lineId = currentLine.getId();
+
+        currentLine.setCount(countBefore + 1);
+        orderRepository.save(order);
+
+        order = orderRepository.findById(orderId).orElse(null);
+        assertNotNull(order);
+        assertNotNull(order.getLines());
+
+        OrderLine foundLine = order.getLines()
+                .stream().filter(l -> l.getId() == lineId)
+                .findAny()
+                .orElse(null);
+        assertNotNull(foundLine);
+
+        assertEquals(foundLine.getCount(), countBefore + 1);
     }
 
     @Test

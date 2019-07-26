@@ -1,11 +1,11 @@
 package com.century.test_project_spolenov.model.client;
 
+import com.century.test_project_spolenov.model.Element;
 import com.century.test_project_spolenov.model.order.Order;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,18 +15,20 @@ import java.util.Set;
 @Getter@Setter
 @NoArgsConstructor
 @Entity
-@Immutable
 @Table(name = "client", schema = "test")
-public class Client implements Serializable {
+public class Client extends Element implements Serializable {
     @Id
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "name", nullable = false, updatable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client",
+            targetEntity = Order.class,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER)
     private Set<Order> orders;
 
     public Client(int id){

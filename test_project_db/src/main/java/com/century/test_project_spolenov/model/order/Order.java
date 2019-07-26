@@ -1,5 +1,6 @@
 package com.century.test_project_spolenov.model.order;
 
+import com.century.test_project_spolenov.model.Element;
 import com.century.test_project_spolenov.model.client.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -21,7 +22,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_head", schema = "test")
-public class Order implements Serializable {
+public class Order extends Element implements Serializable {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = SEQUENCE, generator = "ORDER_HEAD_ID_SEQ")
@@ -40,7 +41,10 @@ public class Order implements Serializable {
     private String address;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order",
+            targetEntity = OrderLine.class, orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private Set<OrderLine> lines;
 
     public Order(int id){

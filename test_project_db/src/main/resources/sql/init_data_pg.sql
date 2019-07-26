@@ -140,3 +140,27 @@ SELECT
 WHERE NOT EXISTS (
         SELECT id FROM test.order_line WHERE id =6
 );
+
+ALTER TABLE test.order_head DROP CONSTRAINT IF EXISTS oreder_head_client_id_fk;
+
+ALTER TABLE test.order_head
+    ADD CONSTRAINT oreder_head_client_id_fk
+        FOREIGN KEY (client_id)
+            REFERENCES test.client(id)
+            ON DELETE CASCADE;
+
+ALTER TABLE test.order_line DROP CONSTRAINT IF EXISTS order_line_order_id_fk;
+
+ALTER TABLE test.order_line
+    ADD CONSTRAINT order_line_order_id_fk
+        FOREIGN KEY (order_id)
+            REFERENCES test.order_head(id)
+            ON DELETE CASCADE;
+
+ALTER TABLE test.order_line DROP CONSTRAINT IF EXISTS order_line_goods_id_fk;
+
+ALTER TABLE test.order_line
+    ADD CONSTRAINT order_line_goods_id_fk
+        FOREIGN KEY (goods_id)
+            REFERENCES test.goods(id)
+            ON DELETE CASCADE;

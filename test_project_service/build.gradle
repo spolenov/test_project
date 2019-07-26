@@ -13,8 +13,13 @@ dependencies {
     //Используем implementation, чтобы контроллер не знал о модели
     implementation project(':test_project_db')
 
+    compile group: 'org.aspectj', name: 'aspectjrt', version: '1.9.4'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.4'
+    
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.0'
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.5.0'
+    testCompile group: 'org.junit.platform', name: 'junit-platform-commons', version: '1.5.1'
+    
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.28.2'
     testCompile group: 'org.springframework', name: 'spring-test', version: '5.1.8.RELEASE'
 

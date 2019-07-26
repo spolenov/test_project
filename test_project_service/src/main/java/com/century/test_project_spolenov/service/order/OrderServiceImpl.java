@@ -2,104 +2,58 @@ package com.century.test_project_spolenov.service.order;
 
 import com.century.test_project_spolenov.model.order.Order;
 import com.century.test_project_spolenov.repository.order.OrderRepository;
+import com.century.test_project_spolenov.service.common.CommonService;
+import com.century.test_project_spolenov.service.request.Request;
 import com.century.test_project_spolenov.service.response.ActionResponse;
-import com.century.test_project_spolenov.service.response.BaseResponse;
-import com.century.test_project_spolenov.service.response.Response;
-import com.century.test_project_spolenov.service.response.ResponseState;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-import static com.century.test_project_spolenov.service.response.ActionResponse.errResponse;
-import static com.century.test_project_spolenov.service.response.ActionResponse.okResponse;
-import static java.util.Collections.singletonList;
+import javax.annotation.PostConstruct;
 
 @Slf4j
 @Service
+@EqualsAndHashCode
 public class OrderServiceImpl implements OrderService{
     private OrderRepository orderRepository;
 
+    private CommonService<Order> commonService;
+
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository){
-        this.orderRepository = orderRepository;
+    public OrderServiceImpl(OrderRepository goodsRepository,
+                            CommonService<Order> commonService){
+        this.orderRepository = goodsRepository;
+        this.commonService = commonService;
     }
 
-    private Response getErrorOrderResponse(Order order){
-        return new OrderResponse(singletonList(order), ResponseState.ERROR);
-    }
-
-    @Override
-    public Response getAll() {
-        List<Order> orders;
-
-        try{
-            orders = orderRepository.findAll();
-        } catch (Exception e){
-            return errResponse("Failed to get all orders", e);
-        }
-
-        if(orders.isEmpty()){
-            return errResponse("No orders found in database.");
-        }
-        return new OrderResponse(orders, ResponseState.OK);
+    @PostConstruct
+    public void initServiceRepository(){
+        this.commonService.setRepository(orderRepository);
     }
 
     @Override
-    public Response getById(int id) {
-        Order order;
-
-        try{
-            order = orderRepository.findById(id).orElse(null);
-        } catch (Exception e){
-            return errResponse(String.format("Failed to get order by id = %d", id), e);
-        }
-
-        if(order == null){
-            return errResponse(String.format("No order found by id = %d", id));
-        }
-
-        return new OrderResponse(order, ResponseState.OK);
+    public ActionResponse getAll() {
+        return commonService.getAll();
     }
 
     @Override
-    public Response deleteOne(int id) {
-        return null;
+    public ActionResponse getById(int id) {
+        return commonService.getById(id);
     }
 
     @Override
-    public Response addNew(OrderRequest request) {
-        request.assertDataHasSingleElement();
-
-        return null;
+    public ActionResponse deleteOne(int id) {
+        return commonService.deleteOne(id);
     }
 
     @Override
-    public Response updateOne(OrderRequest request) {
-        request.assertDataHasSingleElement();
-        Order order = request.getSingleElement();
-
-        try{
-            orderRepository.save(order);
-        } catch (Exception e){
-            return errResponse(String.format("Failed to update order (id = %d)", order.getId()), e);
-        }
-        return okResponse();
+    public ActionResponse addNew(Request<Order> request) {
+        return commonService.addNew(request);
     }
 
-    private class OrderResponse extends ActionResponse<Order> {
-        OrderResponse(List<Order> data, ResponseState state) {
-            super(data, state);
-        }
-
-        OrderResponse(Order data, ResponseState state) {
-            super(singletonList(data), state);
-        }
-
-        @Override
-        public String getDescription() {
-            return getData().toString();
-        }
+    @Override
+    public ActionResponse updateOne(Request<Order> request) {
+        return commonService.updateOne(request);
     }
 }

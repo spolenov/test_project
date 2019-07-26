@@ -34,11 +34,11 @@
         <appender-ref ref="FILE"/>
     </root>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="org.hibernate" level="DEBUG" additivity="false">
+    <logger name="org.hibernate" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 

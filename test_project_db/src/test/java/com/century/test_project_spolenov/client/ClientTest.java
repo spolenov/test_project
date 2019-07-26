@@ -4,7 +4,9 @@ import com.century.test_project_spolenov.model.client.Client;
 import com.century.test_project_spolenov.model.order.Order;
 import com.century.test_project_spolenov.repository.client.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:/spring-db-test.xml"})
+@TestMethodOrder(MethodOrderer.Random.class)
 class ClientTest {
     @Autowired
     private ClientRepository clientRepository;
@@ -82,6 +85,7 @@ class ClientTest {
         int sizeBefore = totalClients.size();
 
         Client existingClient = new Client(totalClients.get(0).getId());
+        existingClient.setName(totalClients.get(0).getName());
 
         Order newOrder = new Order();
         newOrder.setOrderDate(new Date());

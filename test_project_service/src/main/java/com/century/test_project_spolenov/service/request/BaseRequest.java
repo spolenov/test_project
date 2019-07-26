@@ -1,15 +1,20 @@
-package com.century.test_project_spolenov.service.response;
+package com.century.test_project_spolenov.service.request;
+
+import com.century.test_project_spolenov.model.DocType;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@ToString
+@NoArgsConstructor
+@EqualsAndHashCode
 public class BaseRequest<T> implements Request<T>{
+    @Getter
     private List<T> data;
-
-    public List<T> getData(){
-        return data;
-    }
+    @Getter @Setter
+    private DocType docType;
 
     public BaseRequest(List<T> data){
         if(data == null){
@@ -30,5 +35,9 @@ public class BaseRequest<T> implements Request<T>{
 
     public T getSingleElement(){
         return data.get(0);
+    }
+
+    public void setData(List<T> data){
+        this.data = data;
     }
 }

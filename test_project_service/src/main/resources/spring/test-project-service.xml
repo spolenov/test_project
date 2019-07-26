@@ -9,7 +9,8 @@
 
     <import resource="classpath:spring/test-project-db.xml"/>
 
-    <context:component-scan base-package="com.century.test_project_spolenov">
+    <context:component-scan base-package="com.century.test_project_spolenov.service">
         <context:include-filter type="regex" expression=".*ServiceImpl$"/>
+        <context:include-filter type="regex" expression=".*Aspect$"/>
     </context:component-scan>
 </beans>

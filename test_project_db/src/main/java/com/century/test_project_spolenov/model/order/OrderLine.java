@@ -2,7 +2,6 @@ package com.century.test_project_spolenov.model.order;
 
 import com.century.test_project_spolenov.model.goods.Goods;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
