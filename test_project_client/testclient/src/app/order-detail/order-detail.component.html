@@ -1,0 +1,68 @@
+
+<div class = "form-horizontal order-detail-dialog">
+  <mat-dialog-content [formGroup]="form">
+    <h2>Детали заказа #{{order.id}}</h2>
+
+    <div class="container-fluid">
+      <div class = "row">
+        <div class = "col col-sm-3 col-md-3 col-lg-2">
+          <label for = "cboClients">
+            Клиент:
+          </label>
+        </div>
+
+        <div class = "col col-sm-9 col-md-9 col-lg-8">
+          <p-dropdown id = "cboClients"
+                      appendTo="body"
+                      [options]="cboClientsSource"
+                      formControlName = "cboClients"
+                      [style]="{'width':'100%'}"
+          (onChange)="setClient()">
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class = "row">
+        <div class = "col col-sm-3 col-md-3 col-lg-2">
+          <label for = "cmdOrderLines">
+            Товары:
+          </label>
+        </div>
+
+        <div class = "col col-sm-9 col-md-9 col-lg-8">
+          <button pButton  id = "cmdOrderLines"
+                  label="(...)" type="button"
+                  class="ui-button-raised"
+                  (click)="save()"></button>
+        </div>
+      </div>
+
+      <div class = "row">
+        <div class = "col">
+          <label for = "cmdOrderLines">
+            Сумма заказа: ${{getOrderTotalSum(orderLines)}}
+          </label>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="container-fluid">
+      <div class = "row">
+            <div class = "col col-sm-4 col-md-3 col-lg-3">
+              <button pButton  id = "okButton"
+                      label="Сохранить" type="button"
+                      class="ui-button-raised"
+                      (click)="save()"></button>
+            </div>
+            <div class = "col col-sm-4 col-md-3 col-lg-3">
+              <button pButton id = "cancelButton"
+                      label="Закрыть" type="button"
+                      class="ui-button-secondary"
+                      (click)="close()"></button>
+            </div>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>

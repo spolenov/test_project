@@ -1,0 +1,32 @@
+
+<h2>Перечень заказов</h2>
+
+<div class = "container-fluid">
+  <form role="form">
+    <p-table [value]="orderListSnapshot" [autoLayout]="true" class = "test-content-table">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of cols">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-order>
+        <tr>
+          <td *ngFor="let col of cols"
+              (click)="onSelect(order)"
+              (dblclick)="openDetails(selectedOrder.id)"
+              [class.selected]="order.id === (selectedOrder? selectedOrder.id: 0)">
+            {{order[col.field]}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </form>
+
+  <!--<app-order-detail [order]="selectedOrder"></app-order-detail>-->
+</div>
+
+
+
+

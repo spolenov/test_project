@@ -1,0 +1,29 @@
+
+<h2>Перечень товаров</h2>
+
+  <div class = "container-fluid">
+    <form role="form">
+      <p-table [value]="goodsList" [autoLayout]="true" class = "test-content-table">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-goods>
+          <tr>
+            <td *ngFor="let col of columns"
+                (click)="onSelect(goods)"
+                [class.selected]="goods === selectedGoods">
+                {{goods[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </form>
+  </div>
+
+
+
+

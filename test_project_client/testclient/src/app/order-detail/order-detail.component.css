@@ -1,0 +1,40 @@
+@media (min-width: 200px) { .order-detail-dialog {
+  width: 125px;
+}}
+
+@media (min-width: 300px) { .order-detail-dialog {
+  width: 225px;
+}}
+
+@media (min-width: 500px) { .order-detail-dialog {
+  width: 350px;
+}}
+
+@media (min-width: 768px) { .order-detail-dialog {
+  width: 500px;
+}}
+@media (min-width: 1200px) { .order-detail-dialog {
+  width: 600px;
+}}
+
+.order-detail-dialog .mat-dialog-actions .ui-button-raised {
+  font-size:calc(60% + 0.3vw) !important;
+}
+.order-detail-dialog .mat-dialog-actions .ui-button-secondary {
+  font-size:calc(60% + 0.3vw) !important;
+}
+
+.order-detail-dialog .mat-dialog-content h2{
+  font-size:calc(90% + 0.6vw) !important;
+}
+
+.order-detail-dialog .mat-dialog-content h3{
+  font-size:calc(70% + 0.4vw) !important;
+}
+
+.order-detail-dialog .row {
+  margin-top: 15px;
+}
+
+
+
