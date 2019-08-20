@@ -1,0 +1,89 @@
+
+<div class = "form-horizontal goods-detail-dialog" >
+  <mat-dialog-content [formGroup]="form" (ngSubmit)="onSubmit($event)">
+      <h2>Карточка товара #{{goodsToEdit.id}}</h2>
+
+      <div class="container-fluid">
+        <div class = "row">
+          <div class = "col col-sm-3 col-md-3 col-lg-2">
+            <label for = "lblId">
+              Код:
+            </label>
+          </div>
+
+          <div class = "col col-sm-3 col-md-3 col-lg-2">
+            <label id = "lblId">
+              {{goodsToEdit.id}}
+            </label>
+          </div>
+        </div>
+
+        <div class = "inputBoxes">
+          <div class = "row">
+            <div class = "col col-sm-3 col-md-3 col-lg-2">
+              <label for = "txtItemName">
+                Имя:
+              </label>
+            </div>
+
+            <div class = "col col-sm-9 col-md-9 col-lg-8 text-left">
+              <input type="text"
+                     id = "txtItemName"
+                     #txtItemName="ngModel"
+                     [(ngModel)]="goodsToEdit.name"
+                     [ngModelOptions]="{standalone: true}"
+                     required minlength="1"/>
+              <div *ngIf="txtItemName.invalid" style="color: #cb1400; font-size: 90%;">
+                Введите имя товара
+              </div>
+            </div>
+          </div>
+
+          <div class = "row">
+            <div class = "col col-sm-3 col-md-3 col-lg-2">
+              <label for = "txtPrice">
+                Цена, $:
+              </label>
+            </div>
+
+            <div class = "col col-sm-9 col-md-9 col-lg-8 text-left">
+              <input type="text"
+                     id = "txtPrice"
+                     #txtPrice="ngModel"
+                     [(ngModel)]="goodsToEdit.price"
+                     [ngModelOptions]="{standalone: true}"
+                     pInputText (change)="!txtPrice.errors && setPrice()"
+                     placeholder="(до 4 зн. после запятой)"
+                     required minlength="1"
+                     pattern="\d*\.?\d*"/>
+
+              <div *ngIf="txtPrice.errors" style="color: #cb1400; font-size: 90%;">
+                Некорректная цена!
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="container-fluid">
+      <div class = "row">
+        <div class = "col col-sm-4 col-md-3 col-lg-3">
+          <button pButton  id = "okButton"
+                  label="Сохранить" type="button"
+                  class="ui-button-raised"
+                  (click)="!txtPrice.errors &&
+                  !txtItemName.errors &&
+                  saveAndClose()"></button>
+        </div>
+        <div class = "col col-sm-4 col-md-3 col-lg-3">
+          <button pButton id = "cancelButton"
+                  label="Закрыть" type="button"
+                  class="ui-button-secondary"
+                  (click)="close()"></button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-actions>
+</div>
