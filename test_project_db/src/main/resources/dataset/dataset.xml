@@ -24,25 +24,25 @@
     <order_head id = "5" client_id = "4" date = "2019-07-01 00:00:50" address = "Антарктида, полярная станция Восток, д.14, кв.2"/>
     <order_head id = "6" client_id = "5" date = "2019-07-01 00:00:55" address = "о. Гренландия, Нуук, ул. Иванова, д.10, кв.101"/>
 
-    <order_line id = "1" order_id = "1" goods_id = "1" order_num = "1" item_count = "5"/>
-    <order_line id = "2" order_id = "1" goods_id = "1" order_num = "2" item_count = "5"/>
-    <order_line id = "3" order_id = "2" goods_id = "2" order_num = "1" item_count = "5"/>
-    <order_line id = "4" order_id = "3" goods_id = "1" order_num = "1" item_count = "5"/>
-    <order_line id = "5" order_id = "3" goods_id = "3" order_num = "2" item_count = "5"/>
-    <order_line id = "6" order_id = "3" goods_id = "1" order_num = "3" item_count = "5"/>
-    <order_line id = "7" order_id = "4" goods_id = "3" order_num = "1" item_count = "5"/>
-    <order_line id = "8" order_id = "5" goods_id = "1" order_num = "1" item_count = "5"/>
-    <order_line id = "9" order_id = "5" goods_id = "2" order_num = "2" item_count = "5"/>
-    <order_line id = "10" order_id = "5" goods_id = "3" order_num = "3" item_count = "5"/>
-    <order_line id = "11" order_id = "5" goods_id = "4" order_num = "4" item_count = "5"/>
-    <order_line id = "12" order_id = "5" goods_id = "5" order_num = "5" item_count = "5"/>
-    <order_line id = "13" order_id = "5" goods_id = "6" order_num = "6" item_count = "5"/>
-    <order_line id = "14" order_id = "5" goods_id = "7" order_num = "7" item_count = "5"/>
-    <order_line id = "15" order_id = "6" goods_id = "1" order_num = "1" item_count = "5"/>
-    <order_line id = "16" order_id = "6" goods_id = "2" order_num = "2" item_count = "5"/>
-    <order_line id = "17" order_id = "6" goods_id = "3" order_num = "3" item_count = "5"/>
-    <order_line id = "18" order_id = "6" goods_id = "4" order_num = "4" item_count = "5"/>
-    <order_line id = "19" order_id = "6" goods_id = "5" order_num = "5" item_count = "5"/>
-    <order_line id = "20" order_id = "6" goods_id = "6" order_num = "6" item_count = "5"/>
-    <order_line id = "21" order_id = "6" goods_id = "7" order_num = "7" item_count = "5"/>
+    <order_line id = "1" order_id = "1" goods_id = "1" row_num = "1" item_count = "5"/>
+    <order_line id = "2" order_id = "1" goods_id = "1" row_num = "2" item_count = "5"/>
+    <order_line id = "3" order_id = "2" goods_id = "2" row_num = "1" item_count = "5"/>
+    <order_line id = "4" order_id = "3" goods_id = "1" row_num = "1" item_count = "5"/>
+    <order_line id = "5" order_id = "3" goods_id = "3" row_num = "2" item_count = "5"/>
+    <order_line id = "6" order_id = "3" goods_id = "1" row_num = "3" item_count = "5"/>
+    <order_line id = "7" order_id = "4" goods_id = "3" row_num = "1" item_count = "5"/>
+    <order_line id = "8" order_id = "5" goods_id = "1" row_num = "1" item_count = "5"/>
+    <order_line id = "9" order_id = "5" goods_id = "2" row_num = "2" item_count = "5"/>
+    <order_line id = "10" order_id = "5" goods_id = "3" row_num = "3" item_count = "5"/>
+    <order_line id = "11" order_id = "5" goods_id = "4" row_num = "4" item_count = "5"/>
+    <order_line id = "12" order_id = "5" goods_id = "5" row_num = "5" item_count = "5"/>
+    <order_line id = "13" order_id = "5" goods_id = "6" row_num = "6" item_count = "5"/>
+    <order_line id = "14" order_id = "5" goods_id = "7" row_num = "7" item_count = "5"/>
+    <order_line id = "15" order_id = "6" goods_id = "1" row_num = "1" item_count = "5"/>
+    <order_line id = "16" order_id = "6" goods_id = "2" row_num = "2" item_count = "5"/>
+    <order_line id = "17" order_id = "6" goods_id = "3" row_num = "3" item_count = "5"/>
+    <order_line id = "18" order_id = "6" goods_id = "4" row_num = "4" item_count = "5"/>
+    <order_line id = "19" order_id = "6" goods_id = "5" row_num = "5" item_count = "5"/>
+    <order_line id = "20" order_id = "6" goods_id = "6" row_num = "6" item_count = "5"/>
+    <order_line id = "21" order_id = "6" goods_id = "7" row_num = "7" item_count = "5"/>
 </dataset>
