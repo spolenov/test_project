@@ -15,6 +15,7 @@
           <tr>
             <td *ngFor="let col of columns"
                 (click)="onSelect(goods)"
+                (dblclick)="openDetails(goods.id)"
                 [class.selected]="goods === selectedGoods">
                 {{goods[col.field]}}
             </td>

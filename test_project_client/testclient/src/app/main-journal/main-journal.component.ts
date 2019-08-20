@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Client} from "../client";
 import {CLIENTS} from "../mock/mock-clients";
 import {MenuItem} from "primeng/api";
+import {Goods} from "../goods";
 
 @Component({
   selector: 'app-main-journal',
@@ -10,20 +11,21 @@ import {MenuItem} from "primeng/api";
 })
 export class MainJournalComponent implements OnInit {
   clients: Client[];
+
   mainMenuItems: MenuItem[];
 
   constructor() { }
 
   ngOnInit() {
-    this.clients = this.getClients();
+    this.clients = this.fetchClients();
 
     this.mainMenuItems = [
-      {label: 'Заказы', icon: 'fa fa-fw fa-bar-chart', routerLink: ['/order-list']},
-      {label: 'Товары', icon: 'fa fa-fw fa-calendar', routerLink: ['/goods-list']},
+      {label: 'Заказы', routerLink: ['/order-list']},
+      {label: 'Товары', routerLink: ['/goods-list']},
     ];
   }
 
-  getClients(): Client[]{
+  fetchClients(): Client[]{
     return CLIENTS;
   }
 }

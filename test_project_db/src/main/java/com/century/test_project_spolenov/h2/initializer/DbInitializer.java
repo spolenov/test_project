@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
 
-import static org.dbunit.operation.DatabaseOperation.CLEAN_INSERT;
+import static org.dbunit.operation.DatabaseOperation.*;
 
 @Slf4j
 public class DbInitializer {
@@ -53,6 +53,10 @@ public class DbInitializer {
             dBConfig.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new PostgresqlDataTypeFactory());
 
             PreparedStatement statement = databaseConnection.getConnection()
+                    .prepareStatement("DROP TABLE test.order_line;");
+            //statement.execute();
+
+            statement = databaseConnection.getConnection()
                     .prepareStatement("ALTER SEQUENCE test.order_head_id_seq RESTART WITH 100000;");
             statement.execute();
 
@@ -65,6 +69,7 @@ public class DbInitializer {
             statement.execute();
 
             CLEAN_INSERT.execute(databaseConnection, replacementDataSet);
+
         } catch(Exception e){
             log.info("Failed to init db");
             throw e;

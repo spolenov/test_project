@@ -4,5 +4,6 @@ export class OrderLine {
   id: number;
   orderId: number;
   goods: Goods;
-  count: number
+  count: number;
+  rownum:number
 }

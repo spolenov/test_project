@@ -1,10 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ORDERS} from "../mock/mock-order";
 import {Order} from "../order";
 import {DatePipe} from "@angular/common";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {OrderDetailComponent} from "../order-detail/order-detail.component";
 import {Client} from "../client";
+import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {MainJournalComponent} from "../main-journal/main-journal.component";
+import {Goods} from "../goods";
+import {GOODS} from "../mock/mock-goods";
 
 @Component({
   selector: 'app-order-list',
@@ -13,7 +18,8 @@ import {Client} from "../client";
   providers: [DatePipe]
 })
 export class OrderListComponent implements OnInit {
-  @Input() clients: Client[];
+  clients: Client[];
+  goods: Goods[];
 
   orderList: Order[];
   orderListSnapshot: any[];
@@ -21,15 +27,19 @@ export class OrderListComponent implements OnInit {
   selectedOrder: Order;
   cols: any[];
 
+  routeQueryParams: Subscription;
+
   onSelect(order: any): void {
     this.selectedOrder = this.fromSnapshot(order.id);
   }
 
-  constructor(public datePipe: DatePipe, private dialog: MatDialog) {
+  constructor(public datePipe: DatePipe,
+              private dialog: MatDialog,
+              private router: Router,
+              @Inject(MainJournalComponent) private parent: MainJournalComponent) {
   }
 
   ngOnInit() {
-    this.getOrders();
     this.doSnapshot();
 
     this.cols = [
@@ -38,6 +48,8 @@ export class OrderListComponent implements OnInit {
       { field: 'date', header: 'Дата' },
       { field: 'address', header: 'Адрес' }
     ];
+
+    this.clients = this.parent.clients;
   }
 
   doSnapshot(){
@@ -52,6 +64,8 @@ export class OrderListComponent implements OnInit {
     }
 
     this.orderListSnapshot = [];
+
+    this.fetchOrders();
     this.orderList.forEach(o => this.orderListSnapshot.push(toSnapshot(o, this.datePipe)));
   }
 
@@ -60,17 +74,28 @@ export class OrderListComponent implements OnInit {
   }
 
   openDetails(id: number) {
+    this.fetchGoods();
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.data = this.getSelectedDataForChild();
-    this.dialog.open(OrderDetailComponent, dialogConfig);
-  }
 
-  getOrders(){
-    this.orderList = ORDERS;
+    let dialogRef = this.dialog.open(OrderDetailComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.doSnapshot();
+    });
   }
 
   getSelectedDataForChild(): any{
-    return{"order": this.selectedOrder, "clients": this.clients};
+    return{"order": this.selectedOrder, "clients": this.clients, "goods": this.goods};
+  }
+
+  fetchGoods(){
+    this.goods = GOODS;
+  }
+
+  fetchOrders(){
+    this.orderList = ORDERS;
   }
 }

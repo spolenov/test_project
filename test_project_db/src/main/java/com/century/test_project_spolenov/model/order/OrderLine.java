@@ -15,7 +15,10 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "order_line", schema = "test")
+@Table(name = "order_line",
+        schema = "test",
+        uniqueConstraints={@UniqueConstraint(
+                columnNames={"order_id", "row_num"})})
 public class OrderLine implements Serializable {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
@@ -36,6 +39,8 @@ public class OrderLine implements Serializable {
     @Column(name = "item_count", nullable = false)
     private int count;
 
+    @Column(name = "row_num", nullable = false)
+    private int rowNum;
 
     @Override
     public boolean equals(Object o) {
@@ -45,7 +50,8 @@ public class OrderLine implements Serializable {
         return this.goods != null &&
                 id == orderLine.id &&
                 count == orderLine.count &&
-                goods.getId() == orderLine.getGoods().getId();
+                goods.getId() == orderLine.getGoods().getId() &&
+                rowNum == ((OrderLine) o).rowNum;
     }
 
     @Override
@@ -58,6 +64,7 @@ public class OrderLine implements Serializable {
         final StringBuilder sb = new StringBuilder("OrderLine{");
         sb.append("id=").append(id);
         sb.append(", count=").append(count);
+        sb.append(", rownum=").append(rowNum);
         sb.append(", goods=").append(goods == null? "<null>" : goods.getId());
         sb.append('}');
         return sb.toString();

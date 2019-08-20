@@ -20,9 +20,9 @@ import {
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MainJournalComponent} from './main-journal/main-journal.component';
 import {ButtonModule} from "primeng/button";
-import {DropdownModule, TabMenuModule} from "primeng/primeng";
+import {DropdownModule, InputTextModule, TabMenuModule} from "primeng/primeng";
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
-
+import { GoodsDetailComponent } from './goods-detail/goods-detail.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
     OrderDetailComponent,
     OrderListComponent,
     MainJournalComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    GoodsDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -47,10 +48,12 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
     TabViewModule,
     ButtonModule,
     DropdownModule,
-    TabMenuModule
+    TabMenuModule,
+    InputTextModule
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}],
   bootstrap: [AppComponent],
-  entryComponents: [OrderDetailComponent]
+  entryComponents: [OrderDetailComponent, GoodsDetailComponent]
 })
+
 export class AppModule { }

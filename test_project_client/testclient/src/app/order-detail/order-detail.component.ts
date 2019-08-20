@@ -1,9 +1,10 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {Order} from "../order";
-import {FormBuilder, FormControl, FormControlName, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 import {Client} from "../client";
 import {OrderLine} from "../order-line";
+import {Goods} from "../goods";
 
 @Component({
   selector: 'app-order-detail',
@@ -11,9 +12,14 @@ import {OrderLine} from "../order-line";
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent implements OnInit {
+  @Output() closeEvent = new EventEmitter<any>();
+
   clients: Client[];
+  goods: Goods[];
   orderLines: OrderLine[];
-  cboClientsSource: any[];
+
+  clientCboSource: any[];
+  goodsCboSource: any[];
 
   order: Order;
   form: FormGroup;
@@ -26,22 +32,30 @@ export class OrderDetailComponent implements OnInit {
 
     this.order = data.order;
     this.clients = data.clients;
+
+    this.goods = data.goods;
+    console.log(this.goods);
+
     this.orderLines = this.order.orderLines;
 
     this.form = fb.group({
       cboClients: new FormControl(),
+      cboGoods: new FormControl(),
       cmdOrderLines: new FormControl()
     });
-
-    this.form.get('cboClients').setValue(this.order.client);
-    this.cboClientsSource = this.getCboClientsSource(this.clients);
   }
 
   ngOnInit() {
+    this.form.get('cboClients').setValue(this.order.client);
+    this.clientCboSource = this.getCboClientsSource(this.clients);
+    this.goodsCboSource = this.getCboGoodsSource(this.goods);
   }
 
   close() {
-    this.dialogRef.close();
+    //По этому событию должна быть перерисована родительская форма
+    this.closeEvent.emit(null);
+
+    this.dialogRef.close(this.form.value);
   }
 
   save() {
@@ -51,7 +65,20 @@ export class OrderDetailComponent implements OnInit {
   getCboClientsSource(cl: Client[]){
     let result: any[];
     result = [];
-    cl.forEach(i => result.push({'label': i.name, 'value': i}));
+
+    if(cl){
+      cl.forEach(i => result.push({'label': i.name, 'value': i}));
+    }
+    return result;
+  }
+
+  getCboGoodsSource(cl: Goods[]){
+    let result: any[];
+    result = [];
+
+    if(cl){
+      cl.forEach(i => result.push({'label': i.name, 'value': i}));
+    }
     return result;
   }
 
@@ -64,5 +91,14 @@ export class OrderDetailComponent implements OnInit {
 
   setClient(){
     this.order.client = this.form.get('cboClients').value;
+  }
+
+
+  substractLine(rowNum:number){
+
+  }
+
+  addLine(line:OrderLine){
+
   }
 }

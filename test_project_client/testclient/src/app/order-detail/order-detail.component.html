@@ -5,36 +5,99 @@
 
     <div class="container-fluid">
       <div class = "row">
-        <div class = "col col-sm-3 col-md-3 col-lg-2">
+        <div class = "col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <label for = "cboClients">
             Клиент:
           </label>
         </div>
 
-        <div class = "col col-sm-9 col-md-9 col-lg-8">
+        <div class = "col-xs-9 col-sm-9 col-md-6 col-lg-6">
+
           <p-dropdown id = "cboClients"
                       appendTo="body"
-                      [options]="cboClientsSource"
-                      formControlName = "cboClients"
+                      [options]="clientCboSource"
                       [style]="{'width':'100%'}"
-          (onChange)="setClient()">
+                      [(ngModel)]="order.client"
+                      [ngModelOptions]="{standalone: true}">
           </p-dropdown>
         </div>
       </div>
 
       <div class = "row">
-        <div class = "col col-sm-3 col-md-3 col-lg-2">
+        <div class = "col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <label for = "cmdOrderLines">
-            Товары:
+            Товары ({{orderLines.length }}):
           </label>
         </div>
 
-        <div class = "col col-sm-9 col-md-9 col-lg-8">
-          <button pButton  id = "cmdOrderLines"
-                  label="(...)" type="button"
-                  class="ui-button-raised"
-                  (click)="save()"></button>
+        <div class = "col-xs-9 col-sm-9 col-md-10 col-lg-10">
+          <p-table [value]="orderLines" columnResizeMode="expand"
+                   [frozenColumns]="goods"
+                   frozenWidth="400px"
+                   dataKey="id" editMode="row">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>№п/п</th>
+                <th>Товар</th>
+                <th>Количество</th>
+                <th style="width:8em"></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-editing="true" let-ri="rowIndex">
+              <tr [pEditableRow]="rowData">
+
+                <td>
+                  {{rowData.rownum}}
+                </td>
+
+                <td pEditableColumn>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <p-dropdown [options]="goodsCboSource"
+                                  appendTo="body"
+                                  [(ngModel)]="rowData.goods"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [style]="{'width':'100%'}">
+
+                      </p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{rowData.goods.name}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+
+                <td pEditableColumn>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text"
+                             [(ngModel)]="rowData.count"
+                             [ngModelOptions]="{standalone: true}">
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{rowData.count}}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+
+                <td>
+                    <div class = "col">
+                      <button pButton  id = "cmdDeleteRow"
+                              label="(Удалить)" type="button"
+                              class="ui-button-raised"></button>
+                    </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
         </div>
+      </div>
+
+      <div class = "col-xs-6 col-sm-3 col-md-2 col-lg-2">
+        <button pButton  id = "cmdOrderLines"
+                label="(Добавить)" type="button"
+                class="ui-button-raised"></button>
       </div>
 
       <div class = "row">
