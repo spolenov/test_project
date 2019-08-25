@@ -1,6 +1,6 @@
 
 <div class = "form-horizontal goods-detail-dialog" >
-  <mat-dialog-content [formGroup]="form" (ngSubmit)="onSubmit($event)">
+  <mat-dialog-content [formGroup]="form">
       <h2>Карточка товара #{{goodsToEdit.id}}</h2>
 
       <div class="container-fluid">
@@ -81,7 +81,9 @@
           <button pButton id = "cancelButton"
                   label="Закрыть" type="button"
                   class="ui-button-secondary"
-                  (click)="close()"></button>
+                  (click)="close()">
+
+          </button>
         </div>
       </div>
     </div>

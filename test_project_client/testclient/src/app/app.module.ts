@@ -20,7 +20,8 @@ import {
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MainJournalComponent} from './main-journal/main-journal.component';
 import {ButtonModule} from "primeng/button";
-import {DropdownModule, InputTextModule, TabMenuModule} from "primeng/primeng";
+
+import {Calendar, DropdownModule, InputTextModule, TabMenuModule} from "primeng/primeng";
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import { GoodsDetailComponent } from './goods-detail/goods-detail.component';
 
@@ -32,7 +33,8 @@ import { GoodsDetailComponent } from './goods-detail/goods-detail.component';
     OrderListComponent,
     MainJournalComponent,
     PageNotFoundComponent,
-    GoodsDetailComponent
+    GoodsDetailComponent,
+    Calendar
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 
+<script src="order-detail.component.ts"></script>
 <div class = "form-horizontal order-detail-dialog">
   <mat-dialog-content [formGroup]="form">
     <h2>Детали заказа #{{order.id}}</h2>
@@ -7,17 +8,35 @@
       <div class = "row">
         <div class = "col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <label for = "cboClients">
+            Дата:
+          </label>
+        </div>
+
+        <div class = "col-xs-9 col-sm-9 col-md-6 col-lg-6">
+          <p-calendar id = "txtDate"
+                      #txtDate="ngModel"
+                      [(ngModel)]="order.date"
+                      [ngModelOptions]="{standalone: true}"
+                      showTime="true"
+                      hourFormat="24"
+                      required>
+          </p-calendar>
+        </div>
+      </div>
+
+      <div class = "row">
+        <div class = "col-xs-3 col-sm-3 col-md-2 col-lg-2">
+          <label for = "cboClients">
             Клиент:
           </label>
         </div>
 
         <div class = "col-xs-9 col-sm-9 col-md-6 col-lg-6">
-
           <p-dropdown id = "cboClients"
                       appendTo="body"
                       [options]="clientCboSource"
                       [style]="{'width':'100%'}"
-                      [(ngModel)]="order.client"
+                      [(ngModel)]="editableClient"
                       [ngModelOptions]="{standalone: true}">
           </p-dropdown>
         </div>
@@ -26,23 +45,24 @@
       <div class = "row">
         <div class = "col-xs-3 col-sm-3 col-md-2 col-lg-2">
           <label for = "cmdOrderLines">
-            Товары ({{orderLines.length }}):
+            Товары ({{editableOrderLines.length }}):
           </label>
         </div>
 
         <div class = "col-xs-9 col-sm-9 col-md-10 col-lg-10">
-          <p-table [value]="orderLines" columnResizeMode="expand"
+          <p-table [value]="editableOrderLines" columnResizeMode="expand"
                    [frozenColumns]="goods"
                    frozenWidth="400px"
                    dataKey="id" editMode="row">
             <ng-template pTemplate="header">
               <tr>
-                <th>№п/п</th>
+                <th [ngStyle]="{'width':'11%'}">№п/п</th>
                 <th>Товар</th>
-                <th>Количество</th>
-                <th style="width:8em"></th>
+                <th [ngStyle]="{'width':'25%'}">Количество</th>
+                <th [ngStyle]="{'width':'11%'}"></th>
               </tr>
             </ng-template>
+
             <ng-template pTemplate="body" let-rowData let-editing="true" let-ri="rowIndex">
               <tr [pEditableRow]="rowData">
 
@@ -53,26 +73,35 @@
                 <td pEditableColumn>
                   <p-cellEditor>
                     <ng-template pTemplate="input">
-                      <p-dropdown [options]="goodsCboSource"
+                      <p-dropdown id = "txtGoods"
+                                  #txtGoods="ngModel"
+                                  [options]="goodsCboSource"
                                   appendTo="body"
                                   [(ngModel)]="rowData.goods"
                                   [ngModelOptions]="{standalone: true}"
+                                  required
                                   [style]="{'width':'100%'}">
-
                       </p-dropdown>
                     </ng-template>
+
                     <ng-template pTemplate="output">
-                      {{rowData.goods.name}}
+                      {{rowData.goods?.name}}
                     </ng-template>
                   </p-cellEditor>
                 </td>
 
-                <td pEditableColumn>
+                <td pEditableColumn class ="text-right">
                   <p-cellEditor>
-                    <ng-template pTemplate="input">
-                      <input pInputText type="text"
+                    <ng-template pTemplate="input" >
+                      <input id = "txtCount"
+                             #txtCount="ngModel"
                              [(ngModel)]="rowData.count"
-                             [ngModelOptions]="{standalone: true}">
+                             [ngModelOptions]="{standalone: true}"
+                             pInputText type="text"
+                             (input)="setRowErrors(rowData.rownum, !!txtCount.errors)"
+                             placeholder="(до 4 зн. после запятой)"
+                             required minlength="1"
+                             pattern="\d*\.?\d*">
                     </ng-template>
                     <ng-template pTemplate="output">
                       {{rowData.count}}
@@ -80,13 +109,15 @@
                   </p-cellEditor>
                 </td>
 
-                <td>
-                    <div class = "col">
-                      <button pButton  id = "cmdDeleteRow"
-                              label="(Удалить)" type="button"
-                              class="ui-button-raised"></button>
-                    </div>
+                <td class ="text-center">
+                  <button type="button"
+                          id = "cmdDeleteRow"
+                          pButton (click)="deleteLine(rowData.rownum)"
+                          icon="pi pi-times"
+                          class="ui-button-danger"
+                          title="Удалить строку"></button>
                 </td>
+
               </tr>
             </ng-template>
           </p-table>
@@ -94,16 +125,25 @@
         </div>
       </div>
 
-      <div class = "col-xs-6 col-sm-3 col-md-2 col-lg-2">
-        <button pButton  id = "cmdOrderLines"
-                label="(Добавить)" type="button"
-                class="ui-button-raised"></button>
+      <div class = "row" [style]="{'margin-top': '10px'}">
+        <div class = "col-xs-3 col-sm-3 col-md-2 col-lg-2">
+        </div>
+
+        <div class = "col-xs-6 col-sm-4 col-md-3 col-lg-3">
+
+          <button pButton  id = "cmdOrderLines"
+                  label="Добавить строку" type="button"
+                  class="ui-button-raised"
+                  (click)="addLine()">
+          </button>
+
+        </div>
       </div>
 
       <div class = "row">
         <div class = "col">
           <label for = "cmdOrderLines">
-            Сумма заказа: ${{getOrderTotalSum(orderLines)}}
+            Сумма заказа: ${{getOrderTotalSum(editableOrderLines)}}
           </label>
         </div>
       </div>
@@ -112,18 +152,33 @@
 
   <mat-dialog-actions>
     <div class="container-fluid">
+
+      <div class = "row">
+        <div class = "col"
+             *ngIf="isValidateRow && isRowErrors()"
+             style="color: #cb1400; font-size: 90%;">
+          <label for = "cmdSave">
+            {{lineError}}
+          </label>
+        </div>
+      </div>
+
       <div class = "row">
             <div class = "col col-sm-4 col-md-3 col-lg-3">
-              <button pButton  id = "okButton"
+              <button pButton  id = "cmdSave"
                       label="Сохранить" type="button"
                       class="ui-button-raised"
-                      (click)="save()"></button>
+                      (click)="!txtDate.errors && setRowValidationEnabled() && !isRowErrors() && save()">
+
+              </button>
             </div>
             <div class = "col col-sm-4 col-md-3 col-lg-3">
-              <button pButton id = "cancelButton"
+              <button pButton id = "cmdCancel"
                       label="Закрыть" type="button"
                       class="ui-button-secondary"
-                      (click)="close()"></button>
+                      (click)="close()">
+
+              </button>
             </div>
       </div>
     </div>
